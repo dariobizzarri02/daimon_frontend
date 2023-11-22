@@ -17,7 +17,7 @@ export default function Authors() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:3000/authors',
+            url: process.env.API_ENDPOINT+'authors',
             withCredentials: true
         })
             .then(response => {
@@ -29,7 +29,7 @@ export default function Authors() {
             });
         axios({
             method: 'get',
-            url: 'http://localhost:3000/cancreateauthor',
+            url: process.env.API_ENDPOINT+'cancreateauthor',
             withCredentials: true
         })
             .then(response => {

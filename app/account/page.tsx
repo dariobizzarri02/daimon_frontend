@@ -10,7 +10,7 @@ export default function Account() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:3000/user',
+            url: process.env.API_ENDPOINT+'user',
             withCredentials: true
         })
             .then(response => {
@@ -26,7 +26,7 @@ export default function Account() {
     const handleLogout = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:3000/logout',
+            url: process.env.API_ENDPOINT+'logout',
             withCredentials: true
         })
             .then(response => {

@@ -11,7 +11,7 @@ export default function Login() {
     const handleLogin = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:3000/login',
+            url: process.env.API_ENDPOINT+'login',
             data: {
                 username: username,
                 password: password

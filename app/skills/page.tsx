@@ -27,7 +27,7 @@ export default function Skills() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:3000/skills',
+            url: process.env.API_ENDPOINT+'skills',
             withCredentials: true,
         })
         .then((response) => {

@@ -12,7 +12,7 @@ export default function Unregister() {
         if(!username || !password) return;
         axios({
             method: 'post',
-            url: 'http://localhost:3000/unregister',
+            url: process.env.API_ENDPOINT+'unregister',
             data: {
                 username: username,
                 password: password

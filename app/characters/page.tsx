@@ -17,7 +17,7 @@ export default function Characters() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:3000/characters',
+            url: process.env.API_ENDPOINT+'characters',
             withCredentials: true
         })
             .then(response => {
@@ -29,7 +29,7 @@ export default function Characters() {
             });
         axios({
             method: 'get',
-            url: 'http://localhost:3000/cancreatecharacter',
+            url: process.env.API_ENDPOINT+'cancreatecharacter',
             withCredentials: true
         })
             .then(response => {

@@ -11,7 +11,7 @@ export default function Register() {
 	const handleRegister = () => {
 		axios({
 			method: 'post',
-			url: 'http://localhost:3000/register',
+			url: process.env.API_ENDPOINT+'register',
 			data: {
 				username: username,
 				password: password

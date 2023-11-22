@@ -13,7 +13,7 @@ export default function GuildCreation() {
         if(!guildDisplay) return;
         axios({
             method: 'post',
-            url: 'http://localhost:3000/guild',
+            url: process.env.API_ENDPOINT+'guild',
             data: {
                 display: guildDisplay,
                 character: character

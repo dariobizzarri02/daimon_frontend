@@ -11,7 +11,7 @@ export default function Home() {
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: 'http://localhost:3000/event'
+			url: process.env.API_ENDPOINT+'event'
 		})
 			.then(response => {
                 console.log(response.data);
@@ -22,7 +22,7 @@ export default function Home() {
 			});
 		axios({
 			method: 'get',
-			url: 'http://localhost:3000/user',
+			url: process.env.API_ENDPOINT+'user',
 			withCredentials: true
 		})
 			.then(response => {

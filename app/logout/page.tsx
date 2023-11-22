@@ -7,7 +7,7 @@ export default function Logout() {
     const handleLogout = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:3000/logout',
+            url: process.env.API_ENDPOINT+'logout',
             withCredentials: true
         })
             .then(response => {

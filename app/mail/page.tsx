@@ -12,7 +12,7 @@ export default function Mail() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:3000/mail',
+            url: process.env.API_ENDPOINT+'mail',
             withCredentials: true
         })
             .then(response => {

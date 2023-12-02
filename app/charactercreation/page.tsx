@@ -22,7 +22,7 @@ export default function CharacterCreation() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: process.env.API_ENDPOINT+'cancreatecharacter',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'cancreatecharacter',
         })
             .then(response => {
                 console.log(response.data);
@@ -33,7 +33,7 @@ export default function CharacterCreation() {
             });
         axios({
             method: 'get',
-            url: process.env.API_ENDPOINT+'cosmetic/hair'
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'cosmetic/hair'
         })
             .then(response => {
                 setHairStyles(response.data);
@@ -55,7 +55,7 @@ export default function CharacterCreation() {
         };
         axios({
             method: 'post',
-            url: process.env.API_ENDPOINT+'character',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'character',
             data: {
                 display: characterDisplay,
                 body: JSON.stringify(bodyData)

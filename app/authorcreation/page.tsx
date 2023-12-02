@@ -11,7 +11,7 @@ export default function AuthorCreation() {
         if(!authorDisplay) return;
         axios({
             method: 'post',
-            url: process.env.API_ENDPOINT+'author',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'author',
             data: {
                 display: authorDisplay
             },

@@ -27,7 +27,7 @@ export default function Browse() {
         if(!resourceType || !resourceId) return;
         axios({
             method: 'get',
-            url: process.env.API_ENDPOINT+'' + resourceType + '/' + resourceId,
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'' + resourceType + '/' + resourceId,
             withCredentials: true
         })
             .then(response => {

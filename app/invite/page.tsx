@@ -13,7 +13,7 @@ export default function Invite() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: process.env.API_ENDPOINT+'character/'+character,
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'character/'+character,
             withCredentials: true
         })
             .then(response => {
@@ -28,7 +28,7 @@ export default function Invite() {
     const HandlePost = () => {
         axios({
             method: 'post',
-            url: process.env.API_ENDPOINT+'invite',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'invite',
             data: {
                 character: character,
                 guild: guild,

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
@@ -10,7 +10,7 @@ export default function Account() {
     useEffect(() => {
         axios({
             method: 'get',
-            url: process.env.API_ENDPOINT+'user',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user',
             withCredentials: true
         })
             .then(response => {
@@ -26,7 +26,7 @@ export default function Account() {
     const handleLogout = () => {
         axios({
             method: 'post',
-            url: process.env.API_ENDPOINT+'logout',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'logout',
             withCredentials: true
         })
             .then(response => {

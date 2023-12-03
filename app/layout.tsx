@@ -3,8 +3,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { GlobalContextProvider } from './Context/store'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
   title: 'MasterBase Leagues',
   description: 'MasterBase Leagues Team Drafting Platform.',
@@ -17,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <GlobalContextProvider>
           {children}
         </GlobalContextProvider>

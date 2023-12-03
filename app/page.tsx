@@ -126,6 +126,8 @@ export default function Leagues() {
 
     return (
         <div>
+            <div className="color-filter"/>
+            <img className="bg" src="/2023_championship.png" alt="bg" />
             <h2>MASTERBASE</h2>
             <h1>ALL-STAR CHAMPIONSHIP</h1>
             <table>
@@ -167,8 +169,8 @@ export default function Leagues() {
                     })}
                 </tbody>
             </table>
-            <button onClick={() => setHideSelectedPlayers(!hideSelectedPlayers)}>{hideSelectedPlayers ? 'Show' : 'Hide'} Selected Players</button>
-            <button onClick={() => refresh()}>Refresh</button>
+            <button className="hide" onClick={() => setHideSelectedPlayers(!hideSelectedPlayers)}>{hideSelectedPlayers ? 'Show' : 'Hide'} Selected Players</button>
+            <button className="refresh" onClick={() => refresh()}>Refresh</button>
         </div>
     );
 }

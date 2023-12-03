@@ -6,8 +6,8 @@ import { GlobalContextProvider } from './Context/store'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Daimon',
-  description: 'Project Daimon',
+  title: 'MasterBase Leagues',
+  description: 'MasterBase Leagues Team Drafting Platform.',
 }
 
 export default function RootLayout({

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, use } from 'react';
-import { useGlobalContext } from '../../daimon_client/app/Context/store';
+import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
 import Link from 'next/link';
 

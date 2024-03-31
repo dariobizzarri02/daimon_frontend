@@ -37,7 +37,7 @@ export default function Home() {
 	return (
 		<main>
 			<p>DAIMON</p>
-			{eventData&&<p>* Today's Event: {eventData.display} *</p>}
+			{eventData&&<p>* Today&apos;s Event: {eventData.display} *</p>}
 			{userData&&<p>( welcome, {userData.username} )</p>}
 			{!userData&&<Link href="/login">[ Login ]</Link>}
 			{!userData&&<Link href="/register">[ Register ]</Link>}

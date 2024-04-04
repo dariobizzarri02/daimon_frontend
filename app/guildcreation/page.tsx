@@ -31,9 +31,9 @@ export default function GuildCreation() {
     return (
         <div>
             <h1>Guild Creation</h1>
-            <input type="text" onChange={e => setGuildDisplay(e.target.value)} />
-            <button onClick={HandlePost}>[ Create ]</button>
-            <Link href="/">[ Home ]</Link>
+            <input className='form' type="text" onChange={e => setGuildDisplay(e.target.value)} />
+            <button className='form' onClick={HandlePost}>Create</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

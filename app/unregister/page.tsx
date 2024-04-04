@@ -33,20 +33,20 @@ export default function Unregister() {
     return (
         <div>
             <h1>Unregister</h1>
-            <input
+            <input className='form'
                 type="text"
                 placeholder="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
-            <input
+            <input className='form'
                 type="password"
                 placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleUnregister}>[ Unregister ]</button>
-            <Link href="/">[ Home ]</Link>
+            <button className='form' onClick={handleUnregister}>Unregister</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

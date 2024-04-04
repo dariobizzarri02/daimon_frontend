@@ -32,20 +32,20 @@ export default function Login() {
     return (
         <div>
             <h1>Login</h1>
-            <input
+            <input className='form'
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
-            <input
+            <input className='form'
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin}>[ Login ]</button>
-			<Link href="/">[ Home ]</Link>
+            <button className='form' onClick={handleLogin}>Login</button>
+			<Link className='button' href="/">Home</Link>
         </div>
     );
 }

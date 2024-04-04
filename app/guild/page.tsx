@@ -9,9 +9,9 @@ export default function Guild() {
     return (
         <div>
             <h1>Guilds</h1>
-            <Link href="/guildcreation">[ Guild Creation ]</Link>
-            <Link href="/invite">[ Invite ]</Link>
-            <Link href="/">[ Home ]</Link>
+            <Link className='button' href="/guildcreation">Guild Creation</Link>
+            <Link className='button' href="/invite">Invite</Link>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

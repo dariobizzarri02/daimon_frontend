@@ -41,32 +41,32 @@ export default function Browse() {
     return (
         <div>
             <h1>Browse</h1>
-            <select
+            <select className='form'
                 value={resourceType}
                 onChange={(e) => setResourceType(e.target.value)}
             >
-                <option value="">Select a resource type</option>
-                <option value="area">area</option>
-                <option value="article">article</option>
-                <option value="author">author</option>
-                <option value="character">character</option>
-                <option value="guild">guild</option>
-                <option value="item">item</option>
-                <option value="pack">pack</option>
-                <option value="route">route</option>
-                <option value="screen">screen</option>
-                <option value="skill">skill</option>
-                <option value="track">track</option>
-                <option value="user">user</option>
+                <option className='form' value="">Select a resource type</option>
+                <option className='form' value="area">area</option>
+                <option className='form' value="article">article</option>
+                <option className='form' value="author">author</option>
+                <option className='form' value="character">character</option>
+                <option className='form' value="guild">guild</option>
+                <option className='form' value="item">item</option>
+                <option className='form' value="pack">pack</option>
+                <option className='form' value="route">route</option>
+                <option className='form' value="screen">screen</option>
+                <option className='form' value="skill">skill</option>
+                <option className='form' value="track">track</option>
+                <option className='form' value="user">user</option>
             </select>
-            <input
+            <input className='form'
                 type="text"
                 placeholder="Resource ID"
                 value={resourceId}
                 onChange={(e) => setResourceId(e.target.value)}
             />
-            <button onClick={handleBrowse}>[ Browse ]</button>
-            <Link href="/">[ Home ]</Link>
+            <button className='form' onClick={handleBrowse}>Browse</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

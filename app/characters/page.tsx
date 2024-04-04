@@ -45,14 +45,14 @@ export default function Characters() {
         <div>
             <h1>Characters</h1>
             <select onChange={e => setCharacter(e.target.value)}>
-                <option value="">Select a Character</option>
+                <option className='form' value="">Select a Character</option>
                 {characters.map(character => (
                     <option key={character.id} value={character.id}>{character.display}</option>
                 ))}
             </select>
-            {canCreateCharacter && <Link href="/charactercreation">[ Create Character ]</Link>}
-            <Link href="/guild">[ Guild ]</Link>
-            <Link href="/">[ Home ]</Link>
+            {canCreateCharacter && <Link className='button' href="/charactercreation">Create Character</Link>}
+            <Link className='button' href="/guild">Guild</Link>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

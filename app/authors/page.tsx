@@ -50,8 +50,8 @@ export default function Authors() {
                     <option key={author.id} value={author.id}>{author.display}</option>
                 ))}
             </select>
-            {canCreateAuthor && <Link href="/authorcreation">[ Create Author ]</Link>}
-            <Link href="/">[ Home ]</Link>
+            {canCreateAuthor && <Link className='button' href="/authorcreation">Create Author</Link>}
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

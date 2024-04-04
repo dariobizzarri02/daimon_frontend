@@ -29,8 +29,8 @@ export default function AuthorCreation() {
         <div>
             <h1>Create a new Author</h1>
             <input type="text" onChange={e => setAuthorDisplay(e.target.value)} />
-            <button onClick={HandlePost}>[ Create ]</button>
-            <Link href="/">[ Home ]</Link>
+            <button onClick={HandlePost}>Create</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

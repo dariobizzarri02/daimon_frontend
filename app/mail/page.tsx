@@ -34,7 +34,7 @@ export default function Mail() {
                     </div>
                 );
             })}
-            <Link href="/">[ Home ]</Link>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

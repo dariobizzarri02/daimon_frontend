@@ -42,8 +42,8 @@ export default function Music() {
 
     return (
         <div>
-            <button onClick={handlePing}>[ Ping ]</button>
-            <Link href="/">[ Home ]</Link>
+            <button onClick={handlePing}>Ping</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

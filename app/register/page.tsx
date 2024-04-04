@@ -29,20 +29,20 @@ export default function Register() {
 	return (
 		<div>
 			<h1>Register</h1>
-			<input
+			<input className='form'
 				type="text"
 				placeholder="Username"
 				value={username}
 				onChange={(e) => setUsername(e.target.value)}
 			/>
-			<input
+			<input className='form'
 				type="password"
 				placeholder="Password"
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 			/>
-			<button onClick={handleRegister}>[ Register ]</button>
-			<Link href="/">[ Home ]</Link>
+			<button className='form' onClick={handleRegister}>Register</button>
+			<Link className='button' href="/">Home</Link>
 		</div>
 	);
 }

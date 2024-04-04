@@ -132,7 +132,7 @@ export default function Skills() {
     return (
         <div>
             <h1>Skills</h1>
-            <Link href="/">[ Home ]</Link>
+            <Link className='button' href="/">Home</Link>
             <div style={{ width: '100vw', height: '100vh' }}>
                 <ReactFlow nodes={nodes} edges={edges} />
             </div>

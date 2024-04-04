@@ -73,20 +73,20 @@ export default function CharacterCreation() {
     return (
         <div>
             <h1>Create a new Character</h1>
-            <input type="text" placeholder="Display Name" value={characterDisplay} onChange={e => setCharacterDisplay(e.target.value)} />
-            <input type="range" min="0" max="100" value={characterMuscle} onChange={e => setCharacterMuscle(parseFloat(e.target.value))} />
-            <input type="range" min="0" max="100" value={characterFat} onChange={e => setCharacterFat(parseFloat(e.target.value))} />
-            <input type="range" min="0" max="100" value={characterHeight} onChange={e => setCharacterHeight(parseFloat(e.target.value))} />
-            <input type="color" value={characterEyeColor} onChange={e => setCharacterEyeColor(e.target.value)} />
-            <input type="color" value={characterHairColor} onChange={e => setCharacterHairColor(e.target.value)} />
-            <select value={characterHairStyle} onChange={e => setCharacterHairStyle(e.target.value)}>
+            <input className='form' type="text" placeholder="Display Name" value={characterDisplay} onChange={e => setCharacterDisplay(e.target.value)} />
+            <input className='form' type="range" min="0" max="100" value={characterMuscle} onChange={e => setCharacterMuscle(parseFloat(e.target.value))} />
+            <input className='form' type="range" min="0" max="100" value={characterFat} onChange={e => setCharacterFat(parseFloat(e.target.value))} />
+            <input className='form' type="range" min="0" max="100" value={characterHeight} onChange={e => setCharacterHeight(parseFloat(e.target.value))} />
+            <input className='form' type="color" value={characterEyeColor} onChange={e => setCharacterEyeColor(e.target.value)} />
+            <input className='form' type="color" value={characterHairColor} onChange={e => setCharacterHairColor(e.target.value)} />
+            <select className='form' value={characterHairStyle} onChange={e => setCharacterHairStyle(e.target.value)}>
                 <option value="">Select Hair Style</option>
                 {hairStyles.map(hairStyle => (
                     <option key={hairStyle.id} value={hairStyle.id}>{hairStyle.display}</option>
                 ))}
             </select>
-            <button onClick={HandlePost}>[ Create Character ]</button>
-            <Link href="/">[ Home ]</Link>
+            <button className='form' onClick={HandlePost}>Create Character</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

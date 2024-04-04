@@ -43,10 +43,10 @@ export default function Account() {
     return (
         <div>
             <h1>Account</h1>
-			{userData&&<button onClick={handleLogout}>[ Logout ]</button>}
-            {userData&&<Link href="/unregister">[ Unregister ]</Link>}
-            {userData&&<Link href="/mail">[ Mail ]</Link>}
-            <Link href="/">[ Home ]</Link>
+			{userData&&<button onClick={handleLogout}>Logout</button>}
+            {userData&&<Link className='button' href="/unregister">Unregister</Link>}
+            {userData&&<Link className='button' href="/mail">Mail</Link>}
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

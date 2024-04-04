@@ -48,8 +48,8 @@ export default function Invite() {
         <div>
             <h1>Invite</h1>
             <input type="text" placeholder="Target Character" onChange={e => setTargetCharacter(e.target.value)} />
-            <button onClick={HandlePost}>[ Invite ]</button>
-            <Link href="/">[ Home ]</Link>
+            <button onClick={HandlePost}>Invite</button>
+            <Link className='button' href="/">Home</Link>
         </div>
     );
 }

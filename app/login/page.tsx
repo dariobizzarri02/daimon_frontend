@@ -45,6 +45,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button className='form' onClick={handleLogin}>Login</button>
+			<Link className="button" href="/register">Register</Link>
 			<Link className='button' href="/">Home</Link>
         </div>
     );

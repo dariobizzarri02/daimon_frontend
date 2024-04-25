@@ -40,13 +40,11 @@ export default function Home() {
 			{eventData&&<h2>Today&apos;s Event: {eventData.display}</h2>}
 			{userData&&<h2>( welcome, {userData.username} )</h2>}
 			{!userData&&<Link className="button" href="/login">Login</Link>}
-			{!userData&&<Link className="button" href="/register">Register</Link>}
 			{userData&&<Link className="button" href="/account">Account</Link>}
 			{userData&&<Link className="button" href="/characters">Characters</Link>}
 			{userData&&<Link className="button" href="/authors">Authors</Link>}
 			{userData&&<Link className="button" href="/skills">Skills</Link>}
-			<Link className="button" href="/music">Music</Link>
-			<Link className="button" href="/browse">Browse</Link>
+			<Link className="button" href="/leaderboard">Leaderboard</Link>
 		</main>
 	);
 }

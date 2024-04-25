@@ -5,6 +5,8 @@ import axios from 'axios';
 import Link from 'next/link';
 
 export default function Register() {
+	// allowed register strategies: local, discord, minecraft
+	const [registerStrategy, selectRegisterStrategy] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -14,7 +16,8 @@ export default function Register() {
 			url: process.env.NEXT_PUBLIC_API_ENDPOINT+'register',
 			data: {
 				username: username,
-				password: password
+				password: password,
+				strategy: registerStrategy
 			},
 			withCredentials: true
 		})
@@ -29,19 +32,48 @@ export default function Register() {
 	return (
 		<div>
 			<h1>Register</h1>
-			<input className='form'
-				type="text"
-				placeholder="Username"
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-			/>
-			<input className='form'
-				type="password"
-				placeholder="Password"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<button className='form' onClick={handleRegister}>Register</button>
+			{registerStrategy===''&&<div>
+				<button className='form' onClick={() => selectRegisterStrategy('local')}>Local</button>
+				<button className='form' onClick={() => selectRegisterStrategy('discord')}>Discord</button>
+				<button className='form' onClick={() => selectRegisterStrategy('minecraft')}>Minecraft</button>
+				<Link className="button" href="/login">Login</Link>
+			</div>}
+			{registerStrategy==='local'&&<div>
+				<input className='form'
+					type="text"
+					placeholder="Username"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+				/>
+				<input className='form'
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button className='form' onClick={handleRegister}>Register</button>
+				<button className='form' onClick={() => selectRegisterStrategy('')}>Back</button>
+			</div>}
+			{registerStrategy==='discord'&&<div>
+				{/* handle discord oauth*/}
+				<button className='form' onClick={() => selectRegisterStrategy('')}>Back</button>
+			</div>}
+			{registerStrategy==='minecraft'&&<div>
+				<input className='form'
+					type="text"
+					placeholder="Username"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+				/>
+				<input className='form'
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button className='form' onClick={handleRegister}>Register</button>
+				<button className='form' onClick={() => selectRegisterStrategy('')}>Back</button>
+			</div>}
 			<Link className='button' href="/">Home</Link>
 		</div>
 	);

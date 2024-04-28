@@ -6,14 +6,14 @@ import axios from 'axios';
 import Link from 'next/link';
 
 export default function Invite() {
-    const { character } = useGlobalContext();
+    const { player } = useGlobalContext();
     const [ guild, setGuild ] = useState<string>('');
-    const [ targetCharacter, setTargetCharacter ] = useState<string>('');
+    const [ targetPlayer, setTargetPlayer ] = useState<string>('');
 
     useEffect(() => {
         axios({
             method: 'get',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'character/'+character,
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'player/'+player,
             withCredentials: true
         })
             .then(response => {
@@ -28,11 +28,11 @@ export default function Invite() {
     const HandlePost = () => {
         axios({
             method: 'post',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'invite',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'message',
             data: {
-                character: character,
+                player: player,
                 guild: guild,
-                targetCharacter: targetCharacter
+                targetPlayer: targetPlayer
             },
             withCredentials: true
         })
@@ -47,7 +47,7 @@ export default function Invite() {
     return (
         <div>
             <h1>Invite</h1>
-            <input type="text" placeholder="Target Character" onChange={e => setTargetCharacter(e.target.value)} />
+            <input type="text" placeholder="Target Player" onChange={e => setTargetPlayer(e.target.value)} />
             <button onClick={HandlePost}>Invite</button>
             <Link className='button' href="/">Home</Link>
         </div>

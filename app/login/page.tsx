@@ -11,7 +11,7 @@ export default function Login() {
     const handleLogin = () => {
         axios({
             method: 'post',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'login',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'login/local',
             data: {
                 username: username,
                 password: password

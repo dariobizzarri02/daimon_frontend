@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function GuildCreation() {
     const [guildDisplay, setGuildDisplay] = useState('');
-    const { character } = useGlobalContext();
+    const { player } = useGlobalContext();
     
     const HandlePost = () => {
         if(!guildDisplay) return;
@@ -16,7 +16,7 @@ export default function GuildCreation() {
             url: process.env.NEXT_PUBLIC_API_ENDPOINT+'guild',
             data: {
                 display: guildDisplay,
-                character: character
+                player: player
             },
             withCredentials: true
         })

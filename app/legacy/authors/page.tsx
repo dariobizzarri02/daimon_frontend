@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useGlobalContext } from '../Context/store';
+import { useGlobalContext } from '../../Context/store';
 import axios from 'axios';
 import Link from 'next/link';
 

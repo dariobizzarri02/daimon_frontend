@@ -6,13 +6,13 @@ import axios from 'axios';
 import Link from 'next/link';
 
 export default function Mail() {
-    const { character } = useGlobalContext();
+    const { player } = useGlobalContext();
     const [ messages, setMessages ] = useState<any[]>([]);
 
     useEffect(() => {
         axios({
             method: 'get',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'mail',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user/'+player+'/messages',
             withCredentials: true
         })
             .then(response => {
@@ -30,7 +30,7 @@ export default function Mail() {
             {messages.map((message, index) => {
                 return (
                     <div key={index}>
-                        <p>{'Invite to Guild | The character ' + message.character + ' is invited to join the guild ' + message.guild + '.'}</p>
+                        <p>{'Invite to Guild | The player ' + message.player + ' is invited to join the guild ' + message.guild + '.'}</p>
                     </div>
                 );
             })}

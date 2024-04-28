@@ -3,25 +3,20 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 
 interface Context {
-	character: string,
-	setCharacter: Dispatch<SetStateAction<string>>,
-	author: string,
-	setAuthor: Dispatch<SetStateAction<string>>
+	player: string,
+	setPlayer: Dispatch<SetStateAction<string>>
 }
 
 const GlobalContext = createContext<Context>({
-	character: '',
-	setCharacter: () => {},
-	author: '',
-	setAuthor: () => {}
+	player: '',
+	setPlayer: () => {}
 });
 
 export const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
-	const [character, setCharacter] = useState<string>('000000000000');
-	const [author, setAuthor] = useState<string>('000000000000');
+	const [player, setPlayer] = useState<string>('000000000000');
 
 	return (
-		<GlobalContext.Provider value={{ character, setCharacter, author, setAuthor }}>
+		<GlobalContext.Provider value={{ player, setPlayer }}>
 			{children}
 		</GlobalContext.Provider>
 	);

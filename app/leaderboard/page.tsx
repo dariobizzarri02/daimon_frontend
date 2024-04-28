@@ -13,10 +13,9 @@ export default function Leaderboard() {
     const [discord, setDiscord] = useState<any>(null);
 
     useEffect(() => {
-        // parse the query string, and set the leaderboard to the correct value
         const urlParams = new URLSearchParams(window.location.search);
         const leaderboard = urlParams.get('leaderboard');
-        if (leaderboard&&(leaderboard==="players"||leaderboard==="guilds"||leaderboard==="minecraft"||leaderboard==="minecraftFactions"||leaderboard==="discord")) {
+        if (leaderboard&&['players','guilds','minecraft','minecraftFactions','discord'].includes(leaderboard)) {
             toggleLeaderboard(leaderboard);
         }
         else {
@@ -45,7 +44,6 @@ export default function Leaderboard() {
     }
     
     return (
-        // this page will have two tabs, the player leaderboard and the guild leaderboard
         <div>
             <h1>Leaderboard</h1>
             <div className='tab'>

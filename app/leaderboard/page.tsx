@@ -163,7 +163,7 @@ export default function Leaderboard() {
                 </tbody>
             </table>
             </>}
-            <button className='form' onClick={refresh}>Refresh</button>
+            <button className='button' onClick={refresh}>Refresh</button>
 			<Link className='button' href="/">Home</Link>
         </div>
     );

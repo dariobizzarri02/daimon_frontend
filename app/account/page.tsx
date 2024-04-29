@@ -13,9 +13,17 @@ export default function Account() {
             url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user',
             withCredentials: true
         })
-            .then(response => {
-                console.log(response.data);
-                setUserData(response.data);
+            .then(user => {
+                console.log(user.data);
+                axios({
+                    method: 'get',
+                    url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user/auths',
+                    withCredentials: true
+                })
+                    .then(response => {
+                        console.log(response.data);
+                        setUserData({user: user.data, auths: response.data});
+                    })
             })
             .catch(error => {
                 console.error(error);
@@ -43,9 +51,10 @@ export default function Account() {
     return (
         <div>
             <h1>Account</h1>
-			{userData&&<button onClick={handleLogout}>Logout</button>}
-            {userData&&<Link className='button' href="/unregister">Unregister</Link>}
-            {userData&&<Link className='button' href="/mail">Mail</Link>}
+            {userData&&userData.auths&&userData.auths.local&&<h2>Username: @{userData.auths.local.username}</h2>}
+            {userData&&userData.auths&&userData.auths.discord&&<h2>Discord: connected</h2>}
+            {userData&&userData.auths&&userData.auths.minecraft&&<h2>Minecraft: connected</h2>}
+			{userData&&<button className='button' onClick={handleLogout}>Logout</button>}
             <Link className='button' href="/">Home</Link>
         </div>
     );

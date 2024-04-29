@@ -87,6 +87,7 @@ export default function Login() {
                         onChange={(e) => setLocalPassword(e.target.value)}
                     />
                     <button className='form' onClick={handleLocalLogin}>Login</button>
+                    <Link className='form center' href="/register">Register instead?</Link>
                 </div>
             </>
             }
@@ -106,6 +107,8 @@ export default function Login() {
                     />
                     <button className='form' onClick={handleMinecraftLogin}>Login</button>
                 </div>
+                <h3>In order to register your Minecraft Account and gain points through it,</h3>
+                <h3>join the mc.masterbaseguild.it server and perform the /register command.</h3>
             </>
             }
             {loginMethod==="discord"&&<>
@@ -114,9 +117,10 @@ export default function Login() {
                         Login with Discord
                     </a>
                 </div>
+                <h3>In order to gain points through your Discord Account,</h3>
+                <h3>join the <a href="https://discord.gg/R66FeFh8aC" target="_blank" rel="noreferrer">MasterBase Discord Server</a> and link your account.</h3>
             </>
             }
-			<Link className="button" href="/register">Register</Link>
 			<Link className='button' href="/">Home</Link>
         </div>
     );

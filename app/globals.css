@@ -36,6 +36,7 @@
     --tertiary: #77C1E7;
     --quaternary: #E0EDE0;
     --quinary: #DEE2A6;
+    --error: #FF0000;
     --font: 'Roboto';
 }
 
@@ -54,6 +55,21 @@ h1 {
 h2 {
     font-size: 2.5rem;
     text-align: center;
+}
+
+h3 {
+    font-size: 1rem;
+    text-align: center;
+}
+
+a {
+    color: var(--tertiary);
+    text-decoration: none;
+}
+
+.error {
+    color: var(--error);
+    font-weight: bold;
 }
 
 .tab {
@@ -118,6 +134,7 @@ td {
     width: 75rem;
     margin: auto;
     border: 0.5rem solid var(--quaternary);
+    margin-bottom: 2rem;
 }
 
 .form {

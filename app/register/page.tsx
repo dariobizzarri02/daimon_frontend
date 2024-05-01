@@ -18,7 +18,8 @@ export default function Register() {
             url: process.env.NEXT_PUBLIC_API_ENDPOINT+'register/local',
             data: {
                 username: localUsername,
-                password: localPassword
+                password: localPassword,
+                register: true
             },
             withCredentials: true
         })

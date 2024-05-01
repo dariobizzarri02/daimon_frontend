@@ -28,7 +28,8 @@ export default function Login() {
             url: process.env.NEXT_PUBLIC_API_ENDPOINT+'login/local',
             data: {
                 username: localUsername,
-                password: localPassword
+                password: localPassword,
+                register: false
             },
             withCredentials: true
         })

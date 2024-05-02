@@ -15,7 +15,7 @@ export default function Register() {
 		}
         axios({
             method: 'post',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'register/local',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'login/local',
             data: {
                 username: localUsername,
                 password: localPassword,

@@ -12,6 +12,10 @@ export default function Leaderboard() {
     const [minecraftFactions, setMinecraftFactions] = useState<any>(null);
     const [discord, setDiscord] = useState<any>(null);
 
+    function xpToLevel(xp:any){
+        return Math.floor(Math.sqrt(xp/125))
+    }
+
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const leaderboard = urlParams.get('leaderboard');
@@ -59,7 +63,7 @@ export default function Leaderboard() {
                     <tr>
                         <th>Name</th>
                         <th>Guild</th>
-                        <th>Score</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +72,7 @@ export default function Leaderboard() {
                             <tr key={index}>
                                 <td>{player.display}</td>
                                 <td>{guilds.find((guild: any) => guild.id === player.guild)?.display}</td>
-                                <td>{player.score}</td>
+                                <td>{xpToLevel(player.score)}</td>
                             </tr>
                         );
                     })}
@@ -81,7 +85,7 @@ export default function Leaderboard() {
                     <tr>
                         <th>Name</th>
                         <th>Owner</th>
-                        <th>Score</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +94,7 @@ export default function Leaderboard() {
                             <tr key={index}>
                                 <td>{guild.display}</td>
                                 <td>{players.find((player: any) => player.id === guild.player)?.display}</td>
-                                <td>{guild.score}</td>
+                                <td>{xpToLevel(guild.score)}</td>
                             </tr>
                         );
                     })}
@@ -103,7 +107,7 @@ export default function Leaderboard() {
                     <tr>
                         <th>Name</th>
                         <th>Player Name</th>
-                        <th>Score</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,8 +115,8 @@ export default function Leaderboard() {
                         return (
                             <tr key={index}>
                                 <td>{players.find((player: any) => player.id === minecraft.player)?.display}</td>
-                                <td>{minecraft.realname}</td>
-                                <td>{minecraft.score}</td>
+                                <td>{minecraft.minecraft_username}</td>
+                                <td>{xpToLevel(minecraft.score)}</td>
                             </tr>
                         );
                     })}
@@ -125,7 +129,7 @@ export default function Leaderboard() {
                     <tr>
                         <th>Name</th>
                         <th>Faction Name</th>
-                        <th>Score</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,7 +138,7 @@ export default function Leaderboard() {
                             <tr key={index}>
                                 <td>{guilds.find((guild: any) => guild.id === minecraftFactions.guild)?.display}</td>
                                 <td>{minecraftFactions.name}</td>
-                                <td>{minecraftFactions.score}</td>
+                                <td>{xpToLevel(minecraftFactions.score)}</td>
                             </tr>
                         );
                     })}
@@ -146,8 +150,8 @@ export default function Leaderboard() {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Discord ID</th>
-                        <th>Score</th>
+                        <th>Discord Username</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,8 +159,8 @@ export default function Leaderboard() {
                         return (
                             <tr key={index}>
                                 <td>{players.find((player: any) => player.id === discord.player)?.display}</td>
-                                <td>{discord.discord_id}</td>
-                                <td>{discord.score}</td>
+                                <td>{discord.discord_username}</td>
+                                <td>{xpToLevel(discord.score)}</td>
                             </tr>
                         );
                     })}

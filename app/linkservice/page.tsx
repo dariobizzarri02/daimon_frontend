@@ -9,6 +9,7 @@ export default function LinkService() {
     const [loginMethod, setLoginMethod] = useState('');
     const [localUsername, setLocalUsername] = useState('');
     const [localPassword, setLocalPassword] = useState('');
+    const [localRepeat, setLocalRepeat] = useState('');
     const [minecraftUsername, setMinecraftUsername] = useState('');
     const [minecraftPassword, setMinecraftPassword] = useState('');
 
@@ -94,7 +95,7 @@ export default function LinkService() {
             </div>
             {loginMethod==="local"&&<>
                 <div className='formtab'>
-                    <input className='form'
+                <input className='form'
                     type="text"
                     placeholder="Username"
                     value={localUsername}
@@ -106,9 +107,15 @@ export default function LinkService() {
                         value={localPassword}
                         onChange={(e) => setLocalPassword(e.target.value)}
                     />
-                    <button className='form' onClick={handleLocalLogin}>Login</button>
-                    <Link className='form center' href="/register">Register instead?</Link>
+					<input className='form'
+						type="password"
+						placeholder="Repeat Password"
+						value={localRepeat}
+						onChange={(e) => setLocalRepeat(e.target.value)}
+					/>
+                    <button className='form' onClick={handleLocalLogin}>Register</button>
                 </div>
+                {localPassword!==localRepeat&&localRepeat.length>0&&<h3 className="error">Passwords do not match</h3>}
             </>
             }
             {loginMethod==="minecraft"&&<>

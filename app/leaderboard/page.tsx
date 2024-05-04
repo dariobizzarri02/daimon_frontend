@@ -61,6 +61,7 @@ export default function Leaderboard() {
             <table>
                 <thead>
                     <tr>
+                        <th className="fit"></th>
                         <th>Name</th>
                         <th>Guild</th>
                         <th>Level</th>
@@ -70,6 +71,7 @@ export default function Leaderboard() {
                     {players && players.sort((a: any, b: any) => b.score - a.score).map((player: any, index: number) => {
                         return (
                             <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>{player.display}</td>
                                 <td>{guilds.find((guild: any) => guild.id === player.guild)?.display}</td>
                                 <td>{xpToLevel(player.score)}</td>
@@ -83,6 +85,7 @@ export default function Leaderboard() {
             <table>
                 <thead>
                     <tr>
+                        <th className="fit"></th>
                         <th>Name</th>
                         <th>Owner</th>
                         <th>Level</th>
@@ -92,6 +95,7 @@ export default function Leaderboard() {
                     {guilds && guilds.sort((a: any, b: any) => b.score - a.score).map((guild: any, index: number) => {
                         return (
                             <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>{guild.display}</td>
                                 <td>{players.find((player: any) => player.id === guild.player)?.display}</td>
                                 <td>{xpToLevel(guild.score)}</td>
@@ -105,6 +109,7 @@ export default function Leaderboard() {
             <table>
                 <thead>
                     <tr>
+                        <th className="fit"></th>
                         <th>Name</th>
                         <th>Player Name</th>
                         <th>Level</th>
@@ -114,6 +119,7 @@ export default function Leaderboard() {
                     {minecraft && minecraft.sort((a: any, b: any) => b.score - a.score).map((minecraft: any, index: number) => {
                         return (
                             <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>{players.find((player: any) => player.id === minecraft.player)?.display}</td>
                                 <td>{minecraft.minecraft_username}</td>
                                 <td>{xpToLevel(minecraft.score)}</td>
@@ -127,6 +133,7 @@ export default function Leaderboard() {
             <table>
                 <thead>
                     <tr>
+                        <th className="fit"></th>
                         <th>Name</th>
                         <th>Faction Name</th>
                         <th>Level</th>
@@ -136,6 +143,7 @@ export default function Leaderboard() {
                     {minecraftFactions && minecraftFactions.sort((a: any, b: any) => b.score - a.score).map((minecraftFactions: any, index: number) => {
                         return (
                             <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>{guilds.find((guild: any) => guild.id === minecraftFactions.guild)?.display}</td>
                                 <td>{minecraftFactions.name}</td>
                                 <td>{xpToLevel(minecraftFactions.score)}</td>
@@ -149,6 +157,7 @@ export default function Leaderboard() {
             <table>
                 <thead>
                     <tr>
+                        <th className="fit"></th>
                         <th>Name</th>
                         <th>Discord Username</th>
                         <th>Level</th>
@@ -158,6 +167,7 @@ export default function Leaderboard() {
                     {discord && discord.sort((a: any, b: any) => b.score - a.score).map((discord: any, index: number) => {
                         return (
                             <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>{players.find((player: any) => player.id === discord.player)?.display}</td>
                                 <td>{discord.discord_username}</td>
                                 <td>{xpToLevel(discord.score)}</td>

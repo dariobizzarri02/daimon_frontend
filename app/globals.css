@@ -115,6 +115,11 @@ td {
     border: 0.1rem solid var(--quaternary);
 }
 
+.fit {
+    width: 1%;
+    white-space: nowrap;
+}
+
 .button {
     background-color: var(--quinary);
     color: var(--primary);

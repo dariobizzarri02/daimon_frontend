@@ -15,6 +15,10 @@ export default function Account() {
         })
             .then(user => {
                 console.log(user.data);
+                if(!user.data.display) {
+                    location.href = '/usercreation';
+                    return;
+                }
                 axios({
                     method: 'get',
                     url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user/auths',
@@ -48,12 +52,58 @@ export default function Account() {
             });
     };
 
+    const handleUnlink = (service: string) => {
+        axios({
+            method: 'delete',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user/auths/'+service,
+            withCredentials: true
+        })
+            .then(response => {
+                console.log(response.data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+    const scoreToLevel = (score:number) => {
+        return Math.floor(Math.sqrt(score/125))
+    }
+
     return (
         <div>
             <h1>Account</h1>
-            {userData&&userData.auths&&userData.auths.local&&<h2>Username: @{userData.auths.local.username}</h2>}
-            {userData&&userData.auths&&userData.auths.discord&&<h2>Discord: connected</h2>}
-            {userData&&userData.auths&&userData.auths.minecraft&&<h2>Minecraft: connected</h2>}
+            {userData&&userData.user.display&&<div className="card">
+                <p>Display Name: {userData.user.display}</p>
+                <p className="text">Total Level: {scoreToLevel(userData.user.score)}</p>
+                <p className="text">Total Score: {userData.user.score}</p>
+            </div>}
+            {userData&&userData.auths&&userData.auths.local&&<div className="card">
+                <p>Username: @{userData.auths.local.username}</p>
+                <button className="close" onClick={()=>{handleUnlink("local")}}/>
+            </div>}
+            {userData&&userData.auths&&userData.auths.discord&&<div className="card inlineblock">
+                <div>
+                    <img src="/discord.png" alt="Discord"/>
+                    <p>@{userData.auths.discord.discord_username}</p>
+                </div>
+                <p className="text">Level: {scoreToLevel(userData.auths.discord.score)}</p>
+                <p className="text">Score: {userData.auths.discord.score}</p>
+                <button className="close" onClick={()=>{handleUnlink("discord")}}/>
+            </div>}
+            {userData&&userData.auths&&userData.auths.minecraft&&<div className="card inlineblock">
+                <div>
+                    <img src="/minecraft.png" alt="Minecraft"/>
+                    <p>{userData.auths.minecraft.minecraft_username}</p>
+                </div>
+                <p className="text">Level: {scoreToLevel(userData.auths.minecraft.score)}</p>
+                <p className="text">Score: {userData.auths.minecraft.score}</p>
+                <button className="close" onClick={()=>{handleUnlink("minecraft")}}/>
+            </div>}
+            {userData&&userData.auths&&(!userData.auths.local||!userData.auths.discord||!userData.auths.minecraft)&&
+                <Link className="plus" href="/linkservice"/>
+            }
 			{userData&&<button className='button' onClick={handleLogout}>Logout</button>}
             <Link className='button' href="/">Home</Link>
         </div>

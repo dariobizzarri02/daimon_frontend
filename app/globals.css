@@ -78,7 +78,6 @@ a {
     display: flex;
     margin: auto;
     border: 0.5rem solid var(--quaternary);
-    border-bottom: none;
     flex-direction: row;
 }
 
@@ -128,6 +127,46 @@ td {
     display: block;
 }
 
+.card {
+    background-color: var(--tertiary);
+    border: 0.5rem solid var(--quaternary);
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 75rem;
+    margin: auto;
+    margin-top: 2rem;
+    position: relative;
+}
+
+.card img {
+    height: 4rem;
+    margin-right: 0.5rem;
+    margin-left: 1.5rem;
+}
+
+.card p {
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: bold;
+    vertical-align: middle;
+    margin-left: 1.5rem;
+}
+
+.card p.text {
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-left: 1.5rem;
+    width: 100%;
+}
+
+.inlineblock img {
+    display: inline-block;
+}
+
+.inlineblock p {
+    display: inline-block;
+}
+
 .formtab {
     display: flex;
     flex-direction: row;
@@ -147,4 +186,60 @@ td {
 
 .center {
     text-align: center;
+}
+
+.plus {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    background-color: var(--tertiary);
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+.plus::before {
+    content: '+';
+    height: 4rem;
+    width: 4rem;
+    font-size: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.close {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--error);
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: -1.2rem;
+    top: -1.2rem;
+    transition: 0.1s;
+    opacity: 0;
+}
+
+.close::before {
+    content: '+';
+    transform: rotate(45deg);
+    height: 2rem;
+    width: 2rem;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--quaternary);
+}
+
+.card:hover .close {
+    opacity: 1;
 }

@@ -27,6 +27,7 @@ export default function Home() {
 			<h1>DAIMON</h1>
 			{!userData&&<Link className="button" href="/login">Login</Link>}
 			{userData&&<Link className="button" href="/account">Account</Link>}
+			<Link className="button" href="/guilds">Guilds</Link>
 			<Link className="button" href="/leaderboard">Leaderboard</Link>
 		</main>
 	);

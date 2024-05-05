@@ -16,7 +16,7 @@ export default function Account() {
             .then(user => {
                 console.log(user.data);
                 if(!user.data.display) {
-                    location.href = '/usercreation';
+                    location.href = '/createplayer';
                     return;
                 }
                 axios({

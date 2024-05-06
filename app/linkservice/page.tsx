@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
+import HomeLink from '../homelink';
 
 export default function LinkService() {
     const [userData, setUserData] = useState<any>(null);
@@ -148,7 +148,7 @@ export default function LinkService() {
                 <h3>join the <a href="https://discord.gg/R66FeFh8aC" target="_blank" rel="noreferrer">MasterBase Discord Server</a> and link your account.</h3>
             </>
             }
-			<Link className='button' href="/">Home</Link>
+			<HomeLink />
         </div>
     );
 }

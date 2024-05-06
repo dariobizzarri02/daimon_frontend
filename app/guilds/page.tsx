@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import HomeLink from '@/app/homelink';
 
 export default function Guilds() {
     const [userData, setUserData] = useState<any>(null);
@@ -56,7 +57,7 @@ export default function Guilds() {
                 </div>
             ))}
             {userData&&!userData.guild&&<Link className='button' href="/createguild">Create Guild</Link>}
-            <Link className='button' href="/">Home</Link>
+            <HomeLink />
         </div>
     );
 }

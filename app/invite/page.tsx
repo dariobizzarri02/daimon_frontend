@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
-import Link from 'next/link';
+import HomeLink from '../homelink';
 
 export default function Invite() {
     const { player } = useGlobalContext();
@@ -49,7 +49,7 @@ export default function Invite() {
             <h1>Invite</h1>
             <input type="text" placeholder="Target Player" onChange={e => setTargetPlayer(e.target.value)} />
             <button onClick={HandlePost}>Invite</button>
-            <Link className='button' href="/">Home</Link>
+            <HomeLink />
         </div>
     );
 }

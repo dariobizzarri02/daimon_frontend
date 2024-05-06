@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
-import Link from 'next/link';
+import HomeLink from '../homelink';
 
 export default function CreatePlayer() {
     const { player } = useGlobalContext();
@@ -73,7 +73,7 @@ export default function CreatePlayer() {
                 <button className='form' onClick={handleSubmit}>Submit</button>
             </div>
             <button className='button' onClick={handleLogout}>Logout</button>
-            <Link className='button' href="/">Home</Link>
+            <HomeLink />
         </div>
     );
 }

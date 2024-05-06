@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
-import Link from 'next/link';
+import HomeLink from '../homelink';
 
 export default function CreateGuild() {
     const [userData, setUserData] = useState<any>(null);
@@ -48,7 +47,7 @@ export default function CreateGuild() {
                 <input className='form' type='text' placeholder='Display Name' onChange={(e) => setGuildDisplay(e.target.value)} />
                 <button className='form' onClick={handlePost}>Create</button>
             </div>
-            <Link className='button' href="/">Home</Link>
+            <HomeLink />
         </div>
     );
 }

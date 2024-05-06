@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
-import Link from 'next/link';
+import HomeLink from '../homelink';
 
 export default function Mail() {
     const { player } = useGlobalContext();
@@ -34,7 +34,7 @@ export default function Mail() {
                     </div>
                 );
             })}
-            <Link className='button' href="/">Home</Link>
+            <HomeLink />
         </div>
     );
 }

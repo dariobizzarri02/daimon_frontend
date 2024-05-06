@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import HomeLink from '@/app/homelink';
 
 export default function Register() {
     const [localUsername, setLocalUsername] = useState('');
@@ -63,7 +64,7 @@ export default function Register() {
                 </div>
             </>
 			{localPassword!==localRepeat&&localRepeat.length>0&&<h3 className="error">Passwords do not match</h3>}
-			<Link className='button' href="/">Home</Link>
+			<HomeLink />
         </div>
     );
 }

@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
+import HomeLink from '../homelink';
 
 export default function Leaderboard() {
     const [leaderboard, toggleLeaderboard] = useState("");
+    const [pages, setPages] = useState(0);
+    const [page, setPage] = useState(0);
     const [players, setPlayers] = useState<any>(null);
     const [guilds, setGuilds] = useState<any>(null);
     const [minecraft, setMinecraft] = useState<any>(null);
@@ -19,7 +21,7 @@ export default function Leaderboard() {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const leaderboard = urlParams.get('leaderboard');
-        if (leaderboard&&['players','guilds','minecraft','minecraftFactions','discord'].includes(leaderboard)) {
+        if (leaderboard&&['players','guilds','minecraft','minecraft_factions','discord'].includes(leaderboard)) {
             toggleLeaderboard(leaderboard);
         }
         else {
@@ -28,33 +30,62 @@ export default function Leaderboard() {
         refresh();
     }, []);
 
+    useEffect(() => {
+        refresh();
+    }, [page, leaderboard]);
+
     const refresh = () => {
+        //get /leaderboard/:leaderboard to find out how many pages there are
+        if(!leaderboard) return;
         axios({
             method: 'get',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'leaderboards',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'leaderboard/'+leaderboard,
             withCredentials: true
         })
             .then(response => {
-                console.log(response.data);
-                setPlayers(response.data.players);
-                setGuilds(response.data.guilds);
-                setMinecraft(response.data.minecraft);
-                setMinecraftFactions(response.data.minecraftFactions);
-                setDiscord(response.data.discord);
+                setPages(response.data);
             })
             .catch(error => {
                 console.error(error);
             });
+        axios({
+            method: 'get',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'leaderboard/'+leaderboard+"/"+page,
+            withCredentials: true
+        })
+            .then(response => {
+                if (leaderboard==="players") {
+                    setPlayers(response.data);
+                }
+                else if (leaderboard==="guilds") {
+                    setGuilds(response.data);
+                }
+                else if (leaderboard==="minecraft") {
+                    setMinecraft(response.data);
+                }
+                else if (leaderboard==="minecraft_factions") {
+                    setMinecraftFactions(response.data);
+                }
+                else if (leaderboard==="discord") {
+                    setDiscord(response.data);
+                }
+            })
     }
     
     return (
         <div>
             <h1>Leaderboard</h1>
+            <div className='pages'>{
+                // Show page numbers (like this: 1 2 3 4 5 6 7 8 9 10), just the text, no links
+                Array.from(Array(pages).keys()).map((index) => {
+                    return <p key={index} className={page===index?"active":""} onClick={() => setPage(index)}>{index+1}</p>
+                })
+                }</div>
             <div className='tab'>
                 <button className={leaderboard==="players"?"active":""} onClick={() => toggleLeaderboard("players")}>Players</button>
                 <button className={leaderboard==="guilds"?"active":""} onClick={() => toggleLeaderboard("guilds")}>Guilds</button>
                 <button className={leaderboard==="minecraft"?"active":""} onClick={() => toggleLeaderboard("minecraft")}>Minecraft</button>
-                <button className={leaderboard==="minecraftFactions"?"active":""} onClick={() => toggleLeaderboard("minecraftFactions")}>Minecraft Factions</button>
+                <button className={leaderboard==="minecraft_factions"?"active":""} onClick={() => toggleLeaderboard("minecraft_factions")}>Minecraft Factions</button>
                 <button className={leaderboard==="discord"?"active":""} onClick={() => toggleLeaderboard("discord")}>Discord</button>
             </div>
             {leaderboard==="players"&&<>
@@ -73,7 +104,7 @@ export default function Leaderboard() {
                             <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{player.display}</td>
-                                <td>{guilds.find((guild: any) => guild.id === player.guild)?.display}</td>
+                                <td>{player.guild_display}</td>
                                 <td>{xpToLevel(player.score)}</td>
                             </tr>
                         );
@@ -97,7 +128,7 @@ export default function Leaderboard() {
                             <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{guild.display}</td>
-                                <td>{players.find((player: any) => player.id === guild.player)?.display}</td>
+                                <td>{guild.player_display}</td>
                                 <td>{xpToLevel(guild.score)}</td>
                             </tr>
                         );
@@ -120,7 +151,7 @@ export default function Leaderboard() {
                         return (
                             <tr key={index}>
                                 <td>{index+1}</td>
-                                <td>{players.find((player: any) => player.id === minecraft.player)?.display}</td>
+                                <td>{minecraft.player_display}</td>
                                 <td>{minecraft.minecraft_username}</td>
                                 <td>{xpToLevel(minecraft.score)}</td>
                             </tr>
@@ -129,7 +160,7 @@ export default function Leaderboard() {
                 </tbody>
             </table>
             </>}
-            {leaderboard==="minecraftFactions"&&<>
+            {leaderboard==="minecraft_factions"&&<>
             <table>
                 <thead>
                     <tr>
@@ -144,7 +175,7 @@ export default function Leaderboard() {
                         return (
                             <tr key={index}>
                                 <td>{index+1}</td>
-                                <td>{guilds.find((guild: any) => guild.id === minecraftFactions.guild)?.display}</td>
+                                <td>{minecraftFactions.guild_display}</td>
                                 <td>{minecraftFactions.name}</td>
                                 <td>{xpToLevel(minecraftFactions.score)}</td>
                             </tr>
@@ -168,7 +199,7 @@ export default function Leaderboard() {
                         return (
                             <tr key={index}>
                                 <td>{index+1}</td>
-                                <td>{players.find((player: any) => player.id === discord.player)?.display}</td>
+                                <td>{discord.player_display}</td>
                                 <td>{discord.discord_username}</td>
                                 <td>{xpToLevel(discord.score)}</td>
                             </tr>
@@ -178,7 +209,7 @@ export default function Leaderboard() {
             </table>
             </>}
             <button className='button' onClick={refresh}>Refresh</button>
-			<Link className='button' href="/">Home</Link>
+            <HomeLink />
         </div>
     );
 }

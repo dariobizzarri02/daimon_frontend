@@ -57,6 +57,7 @@ export default function Guilds() {
                 </div>
             ))}
             {userData&&!userData.guild&&<Link className='button' href="/createguild">Create Guild</Link>}
+            {userData&&userData.guild&&<Link className='button' href="/guild">Your Guild</Link>}
             <HomeLink />
         </div>
     );

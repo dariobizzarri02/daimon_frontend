@@ -1,12 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
 import HomeLink from '../homelink';
 
 export default function CreatePlayer() {
-    const { player } = useGlobalContext();
     const [display, setDisplay] = useState<any>(null);
 
     useEffect(() => {

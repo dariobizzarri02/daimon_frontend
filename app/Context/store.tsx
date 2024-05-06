@@ -2,10 +2,7 @@
 
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 
-interface Context {
-	player: string,
-	setPlayer: Dispatch<SetStateAction<string>>
-}
+interface Context {}
 
 const GlobalContext = createContext<Context>({
 	player: '',
@@ -13,10 +10,9 @@ const GlobalContext = createContext<Context>({
 });
 
 export const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {
-	const [player, setPlayer] = useState<string>('000000000000');
 
 	return (
-		<GlobalContext.Provider value={{ player, setPlayer }}>
+		<GlobalContext.Provider value={{}}>
 			{children}
 		</GlobalContext.Provider>
 	);

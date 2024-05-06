@@ -1,18 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useGlobalContext } from '../Context/store';
 import axios from 'axios';
 import HomeLink from '../homelink';
 
 export default function Mail() {
-    const { player } = useGlobalContext();
     const [ messages, setMessages ] = useState<any[]>([]);
 
     useEffect(() => {
         axios({
             method: 'get',
-            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user/'+player+'/messages',
+            url: process.env.NEXT_PUBLIC_API_ENDPOINT+'user/messages',
             withCredentials: true
         })
             .then(response => {

@@ -7,6 +7,7 @@ import HomeLink from "@/app/homelink";
 
 export default function Player({ params }: { params: { player: string } }) {
     const [user, setUser] = useState<any>(null);
+    const [userGuild, setUserGuild] = useState<any>(null);
     const [player, setPlayer] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
@@ -24,6 +25,14 @@ export default function Player({ params }: { params: { player: string } }) {
                     return;
                 }
                 setUser(user.data);
+            })
+        axios({
+            method: "get",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+            withCredentials: true
+        })
+            .then(guild => {
+                setUserGuild(guild.data);
             })
         axios({
             method: "get",
@@ -56,6 +65,35 @@ export default function Player({ params }: { params: { player: string } }) {
         return Math.floor(Math.sqrt(score/125))
     }
 
+    const HandlePost = (player: string) => {
+        axios({
+            method: "post",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/message",
+            data: {
+                type: 0,
+                target: player
+            },
+            withCredentials: true
+        })
+    }
+
+    const canUserBeInvited = () => {
+        //if player is looking for a guild
+        if(player&&player.lfg===1) {
+            //if user is in a guild and is the leader
+            if(user&&userGuild&&userGuild.player===user.id) {
+                //if player is not self
+                if(user.id!==player.id) {
+                    //if player is not already in the guild
+                    if(guilds.filter(guild => guild.id===guild.id).length===0) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     return (
         <div>
             <h1>{player&&player.display}</h1>
@@ -64,12 +102,12 @@ export default function Player({ params }: { params: { player: string } }) {
                 <p className="text">Level: {player&&scoreToLevel(player.score)}</p>
                 <p className="text">Score: {player&&player.score}</p>
             </div>
-            <div className="card">
-            {guild&&<Link href={"/guild/"+guild.id}><p>Main Guild: {guild&&guild.display}</p></Link>}
+            {guild&&<div className="card">
+            <Link href={"/guild/"+guild.id}><p>Main Guild: {guild&&guild.display}</p></Link>
                 <p className="text">Level: {guild&&scoreToLevel(guild.score)}</p>
                 <p className="text">Score: {guild&&guild.score}</p>
-            </div>
-            <div className="card">
+            </div>}
+            {guilds&&guilds.length>0&&<div className="card">
                 <p>Guilds:</p>
                 {guilds.map(guild => (
                     <div key={guild.id}>
@@ -78,8 +116,8 @@ export default function Player({ params }: { params: { player: string } }) {
                         </Link>
                     </div>
                 ))}
-            </div>
-            {auths&&auths.local&&<div className="card">
+            </div>}
+            {auths&&auths.local&&auths.local.username&&<div className="card">
                 <p>Username: @{auths.local.username}</p>
             </div>}
             {auths&&auths.discord&&<div className="card inlineblock">
@@ -98,7 +136,8 @@ export default function Player({ params }: { params: { player: string } }) {
                 <p className="text">Level: {scoreToLevel(auths.minecraft.score)}</p>
                 <p className="text">Score: {auths.minecraft.score}</p>
             </div>}
-            {user&&user.id===player.id&&<Link className="button" href="/account"><button>Manage</button></Link>}
+            {user&&player&&user.id===player.id&&<Link className="button" href="/account"><button>Manage</button></Link>}
+            {canUserBeInvited()&&<button className="button" onClick={() => HandlePost(player.id)}>Invite</button>}
             <HomeLink/>
         </div>
     );

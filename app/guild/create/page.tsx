@@ -25,7 +25,7 @@ export default function GuildCreate() {
                 }
                 setUser(user.data);
             });
-    });
+    }, []);
     
     const handlePost = () => {
         if(!guildDisplay) return;

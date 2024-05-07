@@ -5,11 +5,12 @@ import axios from "axios";
 import Link from "next/link";
 import HomeLink from "@/app/homelink";
 
-export default function GuildManage() {
+export default function Guild() {
     const [user, setUser] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guildMainMembers, setGuildMainMembers] = useState<any[]>([]);
     const [guildMembers, setGuildMembers] = useState<any[]>([]);
+    const [lfp, setLfp] = useState<boolean>(false);
 
     useEffect(() => {
         axios({
@@ -47,8 +48,20 @@ export default function GuildManage() {
         })
             .then(guild => {
                 setGuild(guild.data);
+                setLfp(guild.data.lfp);
             })
     }, []);
+
+    const handleLfpToggle = () => {
+        axios({
+            method: "post",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/lfp",
+            withCredentials: true
+        })
+            .then(() => {
+                setLfp(!lfp);
+            })
+    }
 
     const scoreToLevel = (score:number) => {
         return Math.floor(Math.sqrt(score/125))
@@ -74,6 +87,15 @@ export default function GuildManage() {
                     <Link href={"/player/"+member.id} key={member.id}><p className="text">{member.display}</p></Link>
                 ))}
             </div>
+            <Link className="button" href="/guild/recruit">Recruit</Link>
+            <Link className="button" href="/inbox">Inbox</Link>
+            {user&&<div className="switchcontainer">
+                <p>Looking for Guilds</p>
+                <label className="switch">
+                    <input type="checkbox" checked={lfp} onChange={handleLfpToggle}/>
+                    <span className="slider round"></span>
+                </label>
+            </div>}
             <HomeLink/>
         </div>
     );

@@ -112,7 +112,8 @@ export default function Account() {
             {auths&&(!auths.local||!auths.discord||!auths.minecraft)&&
                 <Link className="plus" href="/account/link"/>
             }
-			{user&&<button className="button" onClick={handleLogout}>Logout</button>}
+            <Link className="button" href="/inbox">Inbox</Link>
+			<button className="button" onClick={handleLogout}>Logout</button>
             <Link className="button" href="/account/settings">Settings</Link>
             <HomeLink/>
         </div>

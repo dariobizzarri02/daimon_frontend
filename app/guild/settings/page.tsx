@@ -5,9 +5,11 @@ import axios from "axios";
 import Link from "next/link";
 import HomeLink from "@/app/homelink";
 
-export default function Guild() {
+export default function GuildSettings() {
     const [user, setUser] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
+    const [display, setDisplay] = useState<string>("");
+    const [displayChange, toggleDisplayChange] = useState<boolean>(false);
     const [guildMainMembers, setGuildMainMembers] = useState<any[]>([]);
     const [guildMembers, setGuildMembers] = useState<any[]>([]);
     const [lfp, setLfp] = useState<boolean>(false);
@@ -49,6 +51,7 @@ export default function Guild() {
             .then(guild => {
                 setGuild(guild.data);
                 setLfp(guild.data.lfp);
+                setDisplay(guild.data.display);
             })
     }, []);
 
@@ -63,30 +66,88 @@ export default function Guild() {
             })
     }
 
+    const handleChangeDisplay = () => {
+        axios({
+            method: "post",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/display",
+            withCredentials: true,
+            data: {display: display}
+        })
+            .then(() => {
+                toggleDisplayChange(false);
+            })
+    }
+
+    const handleGuildDelete = () => {
+        axios({
+            method: "delete",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+            withCredentials: true
+        })
+            .then(() => {
+                location.href = "/guild/browse";
+            })
+    }
+
+    const handleMemberPromote = (member:any) => {
+        axios({
+            method: "post",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/member/promote",
+            withCredentials: true,
+            data: {id: member.id}
+        })
+            .then(() => {
+                location.href = "/guild/browse";
+            })
+    }
+
+    const handleMemberKick = (member:any) => {
+        axios({
+            method: "post",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/member/kick",
+            withCredentials: true,
+            data: {id: member.id}
+        })
+            .then(() => {
+                location.reload();
+            })
+    }
+
     const scoreToLevel = (score:number) => {
         return Math.floor(Math.sqrt(score/125))
     }
 
     return (
         <div>
-            <h1>{guild&&guild.display}</h1>
-            <div className="card">
-                <p>Guild</p>
-                <p className="text">Level: {guild&&scoreToLevel(guild.score)}</p>
-                <p className="text">Score: {guild&&guild.score}</p>
-            </div>
+            <h1>Guild Settings</h1>
+            {guild&&<div className="card">
+                <p>Display Name</p>
+                {!displayChange&&<>
+                    <p className="text">{guild.display}</p>
+                    <button onClick={() => toggleDisplayChange(true)}>Edit</button>
+                </>}
+                {displayChange&&<>
+                    <input type="text" value={display} onChange={e => setDisplay(e.target.value)} />
+                    <button onClick={handleChangeDisplay}>Save</button>
+                    <button onClick={() => toggleDisplayChange(false)}>Cancel</button>
+                </>}
+            </div>}
             <div className="card">
                 <p>Main Members</p>
-                {guildMainMembers&&guildMainMembers.map((member:any) => (
+                {guildMainMembers&&guildMainMembers.map((member:any) => (<>
                     <Link href={"/player/"+member.id} key={member.id}><p className="text">{member.display}</p></Link>
-                ))}
+                    <button onClick={() => handleMemberPromote(member)}>Transfer Guild Ownership</button>
+                    <button onClick={() => handleMemberKick(member)}>Kick</button>
+                </>))}
             </div>
             <div className="card">
                 <p>Members</p>
-                {guildMembers&&guildMembers.map((member:any) => (
+                {guildMembers&&guildMembers.map((member:any) => (<>
                     <Link href={"/player/"+member.id} key={member.id}><p className="text">{member.display}</p></Link>
-                ))}
+                    <button onClick={() => handleMemberKick(member)}>Kick</button>
+                </>))}
             </div>
+            <button className="button" onClick={handleGuildDelete}>Delete Guild</button>
             <Link className="button" href="/guild/recruit">Recruit</Link>
             <Link className="button" href="/inbox">Inbox</Link>
             {user&&<div className="switchcontainer">
@@ -96,7 +157,6 @@ export default function Guild() {
                     <span className="slider round"></span>
                 </label>
             </div>}
-            <Link className="button" href="/guild/settings">Settings</Link>
             <HomeLink/>
         </div>
     );

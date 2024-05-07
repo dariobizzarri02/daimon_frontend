@@ -76,13 +76,14 @@ export default function GuildBrowse() {
             })
     }
 
-    const handleJoin = (id: string) => {
+    const handleRequestJoin = (id: string) => {
         axios({
             method: "post",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/message",
             withCredentials: true,
             data: {
-                id: id
+                type: 1,
+                target: id
             }
         })
         .then(() => {
@@ -133,7 +134,7 @@ export default function GuildBrowse() {
                     <Link href={"/guild/"+guild.id}><p>{guild.display}</p></Link>
                     <p className="text">Level: {scoreToLevel(guild.score)}</p>
                     <p className="text">Score: {guild.score}</p>
-                    {canGuildBeJoined(guild)&&<button onClick={() => handleJoin(guild.id)}>Join</button>}
+                    {canGuildBeJoined(guild)&&<button onClick={() => handleRequestJoin(guild.id)}>Request to Join</button>}
                     {user&&guilds.find(g => g.id===guild.id)&&mainGuild&&mainGuild.player!==user.id&&mainGuild.id!==guild.id&&<button onClick={() => handleSetMainGuild(guild.id)}>Set Main</button>}
                     {guilds&&guilds.find(g => g.id===guild.id)&&mainGuild&&mainGuild.id!==guild.id&&<button onClick={() => handleLeave(guild.id)}>Leave</button>}
                     {user&&mainGuild&&mainGuild.player===user.id&&mainGuild.id===guild.id&&<button><Link className="primary" href="/guild">Manage</Link></button>}

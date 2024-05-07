@@ -106,13 +106,13 @@ export default function Inbox() {
                         {message.type===1&&<><p>Guild Application</p>
                         <p className="text">The player {message.player_display} has applied to join the guild {message.guild_display}.</p>
                         </>}
-                        {message.type===0&&message.player===user.id&&<button onClick={() => handleJoin(message)}>Accept Invite</button>}
-                        {message.type===1&&message.guild===guild.id&&<button onClick={() => handleWelcome(message)}>Accept Application</button>}
+                        {message.type===0&&user&&message.player===user.id&&<button onClick={() => handleJoin(message)}>Accept Invite</button>}
+                        {message.type===1&&guild&&message.guild===guild.id&&<button onClick={() => handleWelcome(message)}>Accept Application</button>}
                         <button onClick={() => handleDelete(message)}>
-                            {message.type===0&&message.guild===guild.id&&"Revoke Invite"}
-                            {message.type===1&&message.guild===guild.id&&"Reject Application"}
-                            {message.type===0&&message.player===user.id&&"Refuse Invite"}
-                            {message.type===1&&message.player===user.id&&"Cancel Application"}
+                            {message.type===0&&guild&&message.guild===guild.id&&"Revoke Invite"}
+                            {message.type===1&&guild&&message.guild===guild.id&&"Reject Application"}
+                            {message.type===0&&user&&message.player===user.id&&"Refuse Invite"}
+                            {message.type===1&&user&&message.player===user.id&&"Cancel Application"}
                         </button>
                     </div>
                 );

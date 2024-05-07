@@ -1,12 +1,10 @@
-'use client'
+"use client"
 
 import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
 
 interface Context {}
 
 const GlobalContext = createContext<Context>({
-	player: '',
-	setPlayer: () => {}
 });
 
 export const GlobalContextProvider = ({ children }: { children: React.ReactNode }) => {

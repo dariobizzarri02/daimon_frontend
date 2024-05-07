@@ -1,10 +1,10 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { GlobalContextProvider } from './Context/store'
+import "./globals.css"
+import type { Metadata } from "next"
+import { GlobalContextProvider } from "./Context/store"
 
 export const metadata: Metadata = {
-  title: 'Daimon',
-  description: 'Powered by MasterBase',
+  title: "Daimon",
+  description: "Powered by MasterBase",
 }
 
 export default function RootLayout({

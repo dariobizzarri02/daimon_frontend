@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "../homelink";
+import HomeLink from "@/app/homelink";
 
-export default function Account() {
+export default function Player({ params }: { params: { player: string } }) {
     const [user, setUser] = useState<any>(null);
+    const [player, setPlayer] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
@@ -18,10 +19,6 @@ export default function Account() {
             withCredentials: true
         })
             .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
                 if(user.data&&!user.data.display) {
                     location.href = "/account/create";
                     return;
@@ -30,15 +27,16 @@ export default function Account() {
             })
         axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/player/"+params.player,
             withCredentials: true
         })
-            .then(auths => {
-                setAuths(auths.data);
+            .then(player => {
+                setPlayer(player.data);
+                setAuths({local: {username: player.data.username}, discord: player.data.discord, minecraft: player.data.minecraft});
             })
         axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/player/"+params.player+"/guild",
             withCredentials: true
         })
             .then(guild => {
@@ -46,24 +44,13 @@ export default function Account() {
             })
         axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/player/"+params.player+"/guilds",
             withCredentials: true
         })
-            .then(response => {
-                setGuilds(response.data);
+            .then(guilds => {
+                setGuilds(guilds.data);
             })
     }, []);
-
-    const handleLogout = () => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth/logout",
-            withCredentials: true
-        })
-            .then(() => {
-                location.href = "/";
-            });
-    };
 
     const scoreToLevel = (score:number) => {
         return Math.floor(Math.sqrt(score/125))
@@ -71,25 +58,27 @@ export default function Account() {
 
     return (
         <div>
-            <h1>Account</h1>
-            {user&&user.display&&<div className="card">
-                <Link href={"/player/"+user.id}><p>Display Name: {user.display}</p></Link>
-                <p className="text">Total Level: {scoreToLevel(user.score)}</p>
-                <p className="text">Total Score: {user.score}</p>
-            </div>}
-            {guild&&<div className="card">
-                <Link href={"/guild/"+guild.id}><p>Main Guild: {guild.display}</p></Link>
-                <p className="text">Level: {scoreToLevel(guild.score)}</p>
-                <p className="text">Score: {guild.score}</p>
-            </div>}
-            {guilds&&<div className="card">
+            <h1>{player&&player.display}</h1>
+            <div className="card">
+                <p>Player</p>
+                <p className="text">Level: {player&&scoreToLevel(player.score)}</p>
+                <p className="text">Score: {player&&player.score}</p>
+            </div>
+            <div className="card">
+            {guild&&<Link href={"/guild/"+guild.id}><p>Main Guild: {guild&&guild.display}</p></Link>}
+                <p className="text">Level: {guild&&scoreToLevel(guild.score)}</p>
+                <p className="text">Score: {guild&&guild.score}</p>
+            </div>
+            <div className="card">
                 <p>Guilds:</p>
-                {guilds.map((guild:any) => {
-                    return <div key={guild.id}>
-                        <Link href={"/guild/"+guild.id}><p className="text">{guild.display}</p></Link>
+                {guilds.map(guild => (
+                    <div key={guild.id}>
+                        <Link href={"/guild/"+guild.id}>
+                            <p className="text">{guild.display}</p>
+                        </Link>
                     </div>
-                })}
-            </div>}
+                ))}
+            </div>
             {auths&&auths.local&&<div className="card">
                 <p>Username: @{auths.local.username}</p>
             </div>}
@@ -109,11 +98,7 @@ export default function Account() {
                 <p className="text">Level: {scoreToLevel(auths.minecraft.score)}</p>
                 <p className="text">Score: {auths.minecraft.score}</p>
             </div>}
-            {auths&&(!auths.local||!auths.discord||!auths.minecraft)&&
-                <Link className="plus" href="/account/link"/>
-            }
-			{user&&<button className="button" onClick={handleLogout}>Logout</button>}
-            <Link className="button" href="/account/settings">Settings</Link>
+            {user&&user.id===player.id&&<Link className="button" href="/account"><button>Manage</button></Link>}
             <HomeLink/>
         </div>
     );

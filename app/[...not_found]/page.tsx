@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import HomeLink from '../homelink';
+import HomeLink from "../homelink";
 
 export default function NotFound() {
 
@@ -8,7 +8,7 @@ export default function NotFound() {
         <div>
             <h1>404</h1>
             <h2>Page not found</h2>
-            <HomeLink />
+            <HomeLink/>
         </div>
     );
 }

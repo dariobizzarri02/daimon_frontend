@@ -58,7 +58,7 @@ export default function GuildRecruit() {
             <h2>Players</h2>
             {players.filter(player => player.lfg).filter(player => player.id !== user.id).sort((a, b) => b.score - a.score).map(player => {
                     return (
-                        <div className="card">
+                        <div key={player.id} className="card">
                             <p>{player.display}</p>
                             <p className="text">Level: {scoreToLevel(player.score)}</p>
                             <p className="text">Score: {player.score}</p>

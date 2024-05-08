@@ -37,7 +37,7 @@ export default function Home() {
 			{!user&&<Link className="button" href="/account/login">Login</Link>}
 			{user&&<Link className="button" href="/account">Account</Link>}
 			{user&&<Link className="button" href="/inbox">Inbox</Link>}
-			{(!user||!guilds||!guilds.length)&&<Link className="button" href="/guild/browse">Guilds</Link>}
+			{user&&(!guilds||!guilds.length)&&<Link className="button" href="/guild/browse">Guilds</Link>}
 			{user&&guilds&&guilds.length&&<Link className="button" href="/guild/browse/member">Your Guilds</Link>}
 			<Link className="button" href="/leaderboard">Leaderboard</Link>
 		</main>

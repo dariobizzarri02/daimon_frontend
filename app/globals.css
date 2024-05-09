@@ -400,3 +400,76 @@ border-radius: 2rem;
 .slider.round:before {
 border-radius: 2rem;
 }
+
+.gui {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 25rem;
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    padding-top: 8rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-right: 0.5rem solid var(--quaternary);
+}
+
+.gui input {
+    width: 100%;
+    height: 50%;
+    border: 0.1rem solid var(--quaternary);
+    border-radius: 0.5rem;
+}
+
+.gui select {
+    width: 100%;
+    height: 50%;
+    border: 0.1rem solid var(--quaternary);
+    border-radius: 0.5rem;
+}
+
+.guicard {
+    background-color: var(--tertiary);
+    border: 0.5rem solid var(--quaternary);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.rightbottombutton {
+    background-color: var(--quinary);
+    color: var(--primary);
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    margin: 2rem;
+    cursor: pointer;
+    width: 10%;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.charactercanvas {
+    width: 50%;
+    height: 75%;
+    position: fixed;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.charactercanvas img {
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+}

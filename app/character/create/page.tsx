@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import HomeLink from "../../homelink";
 
@@ -13,6 +13,7 @@ export default function AccountCreate() {
     const [hairStyle, setHairStyle] = useState<string>("");
     const [facialHair, setFacialHair] = useState<string>("");
     const [gender, setGender] = useState<boolean>(true);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         axios({
@@ -21,12 +22,31 @@ export default function AccountCreate() {
             withCredentials: true
         })
             .then(character => {
-                setEyeColor(character.data.eyeColor);
-                setHairColor(character.data.hairColor);
-                setSkinColor(character.data.skinColor);
-                setHairStyle(character.data.hairStyle);
-                setFacialHair(character.data.facialHair);
-                setGender(character.data.gender);
+                if(character) {
+                    setEyeColor(character.data.eye_color);
+                    setHairColor(character.data.hair_color);
+                    setSkinColor(character.data.skin_color);
+                    setHairStyle(character.data.hair_style?.id);
+                    setFacialHair(character.data.facial_hair?.id);
+                    setGender(character.data.gender);
+                }
+                else {
+                    setEyeColor("#000000");
+                    setHairColor("#000000");
+                    setSkinColor("#c58c85");
+                    setHairStyle("07401d362bb1");
+                    setFacialHair("");
+                    setGender(true);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                setEyeColor("#000000");
+                setHairColor("#000000");
+                setSkinColor("#c58c85");
+                setHairStyle("07401d362bb1");
+                setFacialHair("");
+                setGender(true);
             })
         axios({
             method: "get",
@@ -34,10 +54,124 @@ export default function AccountCreate() {
             withCredentials: true
         })
             .then(cosmetics => {
-                setHairStyles(cosmetics.data.hairStyles);
-                setFacialHairs(cosmetics.data.facialHairs);
+                const hairStyles = cosmetics.data.filter((cosmetic: any) => cosmetic.type === 0||cosmetic.type === 1);
+                const facialHairs = cosmetics.data.filter((cosmetic: any) => cosmetic.type === 2);
+                setHairStyles(hairStyles);
+                setFacialHairs(facialHairs);
             })
     }, []);
+
+    const idToUrl = (id: string, index: string) => {
+        return process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/cosmetics/"+id+"/"+index;
+    }
+
+    // image layer order:
+
+    // if the hairstyle is front and back (type 1):
+    // /cosmetics/hair/0 (colored)
+    // /cosmetics/hair/1 (not colored)
+
+    // /cosmetics/face/0 (colored)
+    // /cosmetics/face/1 (not colored)
+
+    // depending on the gender:
+    // /cosmetics/male/0 (colored)
+    // /cosmetics/male/1 (not colored)
+    // or
+    // /cosmetics/female/0 (colored)
+    // /cosmetics/female/1 (not colored)
+
+    // if facial hair is present:
+    // /cosmetics/facialhair/0 (not colored)
+
+    // if the hairstyle is front only (type 0):
+    // /cosmetics/hair/0 (colored)
+    // /cosmetics/hair/1 (not colored)
+    // else if the hairstyle is front and back (type 1):
+    // /cosmetics/hair/2 (colored)
+    // /cosmetics/hair/3 (not colored)
+
+    // all images to color must have #7F7F7F replaced with the hair color
+
+    useEffect(() => {
+        if(!hairStyle||!eyeColor||!hairColor||!skinColor) return;
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext("2d");
+        const style: any = hairStyles.find(style => style.id === hairStyle);
+        if(canvas&&ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const images = [];
+            if(style&&style.type === 1) {
+                images.push([idToUrl(hairStyle, "0"), "hair"]);
+                images.push([idToUrl(hairStyle, "1"), "line"]);
+            }
+            images.push([idToUrl("face", "0"), "skin"]);
+            images.push([idToUrl("face", "1"), "line"]);
+            gender?images.push([idToUrl("male", "0"), "eye"]):images.push([idToUrl("female", "0"), "eye"]);
+            gender?images.push([idToUrl("male", "1"), "line"]):images.push([idToUrl("female", "1"), "line"]);
+            if(facialHair) {
+                images.push([idToUrl(facialHair, "0"), "line"]);
+            }
+            if(style&&style.type === 0) {
+                images.push([idToUrl(hairStyle, "0"), "hair"]);
+                images.push([idToUrl(hairStyle, "1"), "line"]);
+            }
+            else if(style&&style.type === 1) {
+                images.push([idToUrl(hairStyle, "2"), "hair"]);
+                images.push([idToUrl(hairStyle, "3"), "line"]);
+            }
+            const imagePromises = images.map(image => new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => reject();
+                img.crossOrigin = "anonymous";
+                img.src = image[0];
+                if(image[1] === "hair"||image[1] === "skin"||image[1] === "eye") {
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const context = canvas.getContext("2d");
+                        context?.drawImage(img, 0, 0, img.width, img.height);
+                        const imageData = context?.getImageData(0, 0, img.width, img.height);
+                        if(image[1] === "hair") {
+                            for(let i = 0; i < imageData!.data.length; i += 4) {
+                                if(imageData!.data[i] === 127&&imageData!.data[i+1] === 127&&imageData!.data[i+2] === 127) {
+                                    imageData!.data[i] = parseInt(hairColor.substring(1, 3), 16);
+                                    imageData!.data[i+1] = parseInt(hairColor.substring(3, 5), 16);
+                                    imageData!.data[i+2] = parseInt(hairColor.substring(5, 7), 16);
+                                }
+                            }
+                        }
+                        else if(image[1] === "skin") {
+                            for(let i = 0; i < imageData!.data.length; i += 4) {
+                                if(imageData!.data[i] === 127&&imageData!.data[i+1] === 127&&imageData!.data[i+2] === 127) {
+                                    imageData!.data[i] = parseInt(skinColor.substring(1, 3), 16);
+                                    imageData!.data[i+1] = parseInt(skinColor.substring(3, 5), 16);
+                                    imageData!.data[i+2] = parseInt(skinColor.substring(5, 7), 16);
+                                }
+                            }
+                        }
+                        else if(image[1] === "eye") {
+                            for(let i = 0; i < imageData!.data.length; i += 4) {
+                                if(imageData!.data[i] === 127&&imageData!.data[i+1] === 127&&imageData!.data[i+2] === 127) {
+                                    imageData!.data[i] = parseInt(eyeColor.substring(1, 3), 16);
+                                    imageData!.data[i+1] = parseInt(eyeColor.substring(3, 5), 16);
+                                    imageData!.data[i+2] = parseInt(eyeColor.substring(5, 7), 16);
+                                }
+                            }
+                        }
+                        context?.putImageData(imageData!, 0, 0);
+                        resolve(canvas);
+                    }
+                }
+            }));
+            Promise.all(imagePromises)
+                .then((images: any) => {
+                    images.forEach((image: any) => ctx.drawImage(image, 0, 0, canvas.width, canvas.height));
+                })
+        }
+    })
 
     const handleSubmit = () => {
         axios({
@@ -48,7 +182,7 @@ export default function AccountCreate() {
                 hairColor: hairColor,
                 skinColor: skinColor,
                 hairStyle: hairStyle,
-                facialHair: facialHair,
+                facialHair: facialHair?facialHair:null,
                 gender: gender
             },
             withCredentials: true
@@ -58,45 +192,49 @@ export default function AccountCreate() {
     return (
         <div>
             <h1>Create Character</h1>
-            <div className="charactercanvas">
-                <img src="/character/h3bc.png"/>
-                <img src="/character/h3bl.png"/>
-                <img src="/character/fc.png"/>
-                <img src="/character/fl.png"/>
-                {gender? <img src="/character/ffc.png"/> : <img src="/character/fmc.png"/>}
-                {gender? <img src="/character/ffl.png"/> : <img src="/character/fml.png"/>}
-                <img src="/character/h3fc.png"/>
-                <img src="/character/h3fl.png"/>
-            </div>
+            <canvas ref={canvasRef} width="512" height="512"/>
             <div className="gui">
+                {gender&&<>
                 <div className="guicard">
                     <label>Gender</label>
                     <input type="checkbox" checked={gender} onChange={e => setGender(!gender)}/>
                 </div>
+                </>}
+                {eyeColor&&<>
                 <div className="guicard">
                 <label>Eye Color</label>
                 <input type="color" value={eyeColor} onChange={e => setEyeColor(e.target.value)}/>
                 </div>
+                </>}
+                {hairColor&&<>
                 <div className="guicard">
                 <label>Hair Color</label>
                 <input type="color" value={hairColor} onChange={e => setHairColor(e.target.value)}/>
                 </div>
+                </>}
+                {skinColor&&<>
                 <div className="guicard">
                 <label>Skin Color</label>
                 <input type="color" value={skinColor} onChange={e => setSkinColor(e.target.value)}/>
                 </div>
+                </>}
+                {hairStyle&&<>
                 <div className="guicard">
                 <label>Hair Style</label>
                 <select value={hairStyle} onChange={e => setHairStyle(e.target.value)}>
-                    {hairStyles.map(hairStyle => <option key={hairStyle} value={hairStyle}>{hairStyle}</option>)}
+                    <option value="">None</option>
+                    {hairStyles.map(hairStyle => <option key={hairStyle.id} value={hairStyle.id}>{hairStyle.display}</option>)}
                 </select>
                 </div>
-                <div className="guicard">
-                <label>Facial Hair</label>
+                </>}
+                {facialHair&&<>
+                <div className="guicard"><label>Facial Hair</label>
                 <select value={facialHair} onChange={e => setFacialHair(e.target.value)}>
-                    {facialHairs.map(facialHair => <option key={facialHair} value={facialHair}>{facialHair}</option>)}
+                    <option value="">None</option>
+                    {facialHairs.map(facialHair => <option key={facialHair.id} value={facialHair.id}>{facialHair.display}</option>)}
                 </select>
                 </div>
+                </>}
             </div>
                 <button className="rightbottombutton" onClick={handleSubmit}>Submit</button>
             <HomeLink/>

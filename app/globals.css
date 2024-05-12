@@ -457,18 +457,9 @@ border-radius: 2rem;
     bottom: 0;
 }
 
-.charactercanvas {
-    width: 50%;
-    height: 75%;
+canvas {
+    width: 35%;
     position: fixed;
-    bottom: 0;
-    right: 50%;
-    transform: translateX(50%);
-}
-
-.charactercanvas img {
-    height: 100%;
-    position: absolute;
     bottom: 0;
     right: 50%;
     transform: translateX(50%);

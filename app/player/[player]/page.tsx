@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import HomeLink from "@/app/homelink";
+import Character from "@/app/character";
 
 export default function Player({ params }: { params: { player: string } }) {
     const [user, setUser] = useState<any>(null);
@@ -12,6 +13,7 @@ export default function Player({ params }: { params: { player: string } }) {
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
+    const [character, setCharacter] = useState<boolean|null>(null);
 
     useEffect(() => {
         axios({
@@ -59,6 +61,14 @@ export default function Player({ params }: { params: { player: string } }) {
             .then(guilds => {
                 setGuilds(guilds.data);
             })
+        axios({
+            method: "get",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/player/"+params.player+"/character/boolean",
+            withCredentials: true
+        })
+            .then(character => {
+                setCharacter(character.data);
+            })
     }, []);
 
     const scoreToLevel = (score:number) => {
@@ -97,6 +107,7 @@ export default function Player({ params }: { params: { player: string } }) {
     return (
         <div>
             <h1>{player&&player.display}</h1>
+            {character===true&&<Character id={player.id}/>}
             <div className="card">
                 <p>Player</p>
                 <p className="text">Level: {player&&scoreToLevel(player.score)}</p>

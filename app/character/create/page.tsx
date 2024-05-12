@@ -13,6 +13,7 @@ export default function AccountCreate() {
     const [hairStyle, setHairStyle] = useState<string>("");
     const [facialHair, setFacialHair] = useState<string>("");
     const [gender, setGender] = useState<boolean>(true);
+    const [firstCharacter, setFirstCharacter] = useState<boolean>(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function AccountCreate() {
                     setHairStyle(character.data.hair_style?.id);
                     setFacialHair(character.data.facial_hair?.id);
                     setGender(character.data.gender);
+                    setFirstCharacter(false);
                 }
                 else {
                     setEyeColor("#000000");
@@ -37,6 +39,7 @@ export default function AccountCreate() {
                     setHairStyle("07401d362bb1");
                     setFacialHair("");
                     setGender(true);
+                    setFirstCharacter(true);
                 }
             })
             .catch(err => {
@@ -47,6 +50,7 @@ export default function AccountCreate() {
                 setHairStyle("07401d362bb1");
                 setFacialHair("");
                 setGender(true);
+                setFirstCharacter(true);
             })
         axios({
             method: "get",
@@ -189,6 +193,14 @@ export default function AccountCreate() {
         })
     }
 
+    const handleDelete = () => {
+        axios({
+            method: "delete",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/character",
+            withCredentials: true
+        })
+    }
+
     return (
         <div>
             <h1>Create Character</h1>
@@ -236,6 +248,7 @@ export default function AccountCreate() {
                 </div>
                 </>}
             </div>
+                {!firstCharacter&&<button className="righttopbutton" onClick={handleDelete}>Delete</button>}
                 <button className="rightbottombutton" onClick={handleSubmit}>Submit</button>
             <HomeLink/>
         </div>

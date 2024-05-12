@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import HomeLink from "../homelink";
+import Character from "../character";
 
 export default function Account() {
     const [user, setUser] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
+    const [character, setCharacter] = useState<boolean|null>(null);
 
     useEffect(() => {
         axios({
@@ -52,6 +54,14 @@ export default function Account() {
             .then(response => {
                 setGuilds(response.data);
             })
+        axios({
+            method: "get",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/character/boolean",
+            withCredentials: true
+        })
+            .then(response => {
+                setCharacter(response.data);
+            })
     }, []);
 
     const handleLogout = () => {
@@ -72,6 +82,7 @@ export default function Account() {
     return (
         <div>
             <h1>Account</h1>
+            {user&&user.id&&character===true&&<Character id={user.id}/>}
             {user&&user.display&&<div className="card">
                 <Link href={"/player/"+user.id}><p>Display Name: {user.display}</p></Link>
                 <p className="text">Total Level: {scoreToLevel(user.score)}</p>
@@ -111,6 +122,12 @@ export default function Account() {
             </div>}
             {auths&&(!auths.local||!auths.discord||!auths.minecraft)&&
                 <Link className="plus" href="/account/link"/>
+            }
+            {character===false&&
+                <Link className="button" href="/character/create">Create Character</Link>
+            }
+            {character===true&&
+                <Link className="button" href="/character/create">Edit Character</Link>
             }
             <Link className="button" href="/inbox">Inbox</Link>
 			<button className="button" onClick={handleLogout}>Logout</button>

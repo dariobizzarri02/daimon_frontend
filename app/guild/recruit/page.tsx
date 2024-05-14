@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import HomeLink from "../../homelink";
+import { HomeLink, scoreToLevel } from "@/app/commons";
 import Link from "next/link";
 
-export default function GuildRecruit() {
+export const GuildRecruit= () => {
     const [ user, setUser ] = useState<any>(null);
     const [players, setPlayers] = useState<any[]>([]);
 
@@ -46,10 +46,6 @@ export default function GuildRecruit() {
             },
             withCredentials: true
         })
-    }
-
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
     }
 
     return (

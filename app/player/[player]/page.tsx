@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
-import Character from "@/app/character";
+import { useGlobalContext } from "@/app/Context/store";
+import { HomeLink, Character, scoreToLevel, handleAuthentication } from "@/app/commons";
 
-export default function Player({ params }: { params: { player: string } }) {
-    const [user, setUser] = useState<any>(null);
-    const [userGuild, setUserGuild] = useState<any>(null);
+export const Player = ({ params }: { params: { player: string } }) => {
+    const { authenticated, setAuthenticated } = useGlobalContext();
+    const { user } = useGlobalContext();
+    const [leader, setLeader] = useState<boolean>(false);
     const [player, setPlayer] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
@@ -16,25 +17,14 @@ export default function Player({ params }: { params: { player: string } }) {
     const [character, setCharacter] = useState<boolean|null>(null);
 
     useEffect(() => {
-        axios({
+        handleAuthentication(authenticated, setAuthenticated);
+        if(authenticated) axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/leader",
             withCredentials: true
         })
-            .then(user => {
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
-            })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
-            withCredentials: true
-        })
-            .then(guild => {
-                setUserGuild(guild.data);
+            .then(leader => {
+                setLeader(leader.data);
             })
         axios({
             method: "get",
@@ -71,10 +61,6 @@ export default function Player({ params }: { params: { player: string } }) {
             })
     }, []);
 
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
-    }
-
     const HandlePost = (player: string) => {
         axios({
             method: "post",
@@ -91,9 +77,9 @@ export default function Player({ params }: { params: { player: string } }) {
         //if player is looking for a guild
         if(player&&player.lfg===1) {
             //if user is in a guild and is the leader
-            if(user&&userGuild&&userGuild.player===user.id) {
+            if(leader) {
                 //if player is not self
-                if(user.id!==player.id) {
+                if(user!==player.id) {
                     //if player is not already in the guild
                     if(guilds.filter(guild => guild.id===guild.id).length===0) {
                         return true;
@@ -147,7 +133,7 @@ export default function Player({ params }: { params: { player: string } }) {
                 <p className="text">Level: {scoreToLevel(auths.minecraft.score)}</p>
                 <p className="text">Score: {auths.minecraft.score}</p>
             </div>}
-            {user&&player&&user.id===player.id&&<Link className="button" href="/account"><button>Manage</button></Link>}
+            {user&&player&&user===player.id&&<Link className="button" href="/account"><button>Manage</button></Link>}
             {canUserBeInvited()&&<button className="button" onClick={() => HandlePost(player.id)}>Invite</button>}
             <HomeLink/>
         </div>

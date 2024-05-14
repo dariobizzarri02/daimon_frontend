@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import HomeLink from "../../homelink";
+import { HomeLink, idToUrl } from "@/app/commons";
 
-export default function AccountCreate() {
+export const AccountCreate= () => {
     const [hairStyles, setHairStyles] = useState<any[]>([])
     const [facialHairs, setFacialHairs] = useState<any[]>([])
     const [eyeColor, setEyeColor] = useState<string>("");
@@ -42,16 +42,6 @@ export default function AccountCreate() {
                     setFirstCharacter(true);
                 }
             })
-            .catch(err => {
-                console.error(err);
-                setEyeColor("#000000");
-                setHairColor("#000000");
-                setSkinColor("#c58c85");
-                setHairStyle("07401d362bb1");
-                setFacialHair("");
-                setGender(true);
-                setFirstCharacter(true);
-            })
         axios({
             method: "get",
             url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/cosmetics",
@@ -64,38 +54,6 @@ export default function AccountCreate() {
                 setFacialHairs(facialHairs);
             })
     }, []);
-
-    const idToUrl = (id: string, index: string) => {
-        return process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/cosmetics/"+id+"/"+index;
-    }
-
-    // image layer order:
-
-    // if the hairstyle is front and back (type 1):
-    // /cosmetics/hair/0 (colored)
-    // /cosmetics/hair/1 (not colored)
-
-    // /cosmetics/face/0 (colored)
-    // /cosmetics/face/1 (not colored)
-
-    // depending on the gender:
-    // /cosmetics/male/0 (colored)
-    // /cosmetics/male/1 (not colored)
-    // or
-    // /cosmetics/female/0 (colored)
-    // /cosmetics/female/1 (not colored)
-
-    // if facial hair is present:
-    // /cosmetics/facialhair/0 (not colored)
-
-    // if the hairstyle is front only (type 0):
-    // /cosmetics/hair/0 (colored)
-    // /cosmetics/hair/1 (not colored)
-    // else if the hairstyle is front and back (type 1):
-    // /cosmetics/hair/2 (colored)
-    // /cosmetics/hair/3 (not colored)
-
-    // all images to color must have #7F7F7F replaced with the hair color
 
     useEffect(() => {
         if(!hairStyle||!eyeColor||!hairColor||!skinColor) return;

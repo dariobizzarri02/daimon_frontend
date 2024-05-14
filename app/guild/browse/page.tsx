@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
+import { HomeLink, scoreToLevel } from "@/app/commons";
 
-export default function GuildBrowse() {
+export const GuildBrowse= () => {
     const [user, setUser] = useState<any>(null);
     const [mainGuild, setMainGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
@@ -60,10 +60,6 @@ export default function GuildBrowse() {
                 setAllGuilds(guilds.data);
             })
     }, []);
-
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
-    }
 
     const handleLfgToggle = () => {
         axios({

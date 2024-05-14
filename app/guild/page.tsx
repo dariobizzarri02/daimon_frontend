@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
+import { HomeLink, scoreToLevel } from "@/app/commons";
 
-export default function Guild() {
+export const Guild= () => {
     const [user, setUser] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guildMainMembers, setGuildMainMembers] = useState<any[]>([]);
@@ -61,10 +61,6 @@ export default function Guild() {
             .then(() => {
                 setLfp(!lfp);
             })
-    }
-
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
     }
 
     return (

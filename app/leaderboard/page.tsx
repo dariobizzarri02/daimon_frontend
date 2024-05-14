@@ -2,18 +2,14 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import HomeLink from "../homelink";
+import { HomeLink, scoreToLevel } from "@/app/commons";
 import Link from "next/link";
 
-export default function Leaderboard() {
+export const Leaderboard= () => {
     const [leaderboard, toggleLeaderboard] = useState<string>("");
     const [pages, setPages] = useState<number>(0);
     const [page, setPage] = useState<number>(0);
     const [entries, setEntries] = useState<any[]>([]);
-
-    function xpToLevel(xp:any){
-        return Math.floor(Math.sqrt(xp/125))
-    }
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -83,7 +79,7 @@ export default function Leaderboard() {
                                 <td>{index+1}</td>
                                 <td><Link href={"/player/"+player.id}>{player.display}</Link></td>
                                 <td><Link href={"/guild/"+player.guild}>{player.guild_display}</Link></td>
-                                <td>{xpToLevel(player.score)}</td>
+                                <td>{scoreToLevel(player.score)}</td>
                             </tr>
                         );
                     })}
@@ -107,7 +103,7 @@ export default function Leaderboard() {
                                 <td>{index+1}</td>
                                 <td><Link href={"/guild/"+guild.id}>{guild.display}</Link></td>
                                 <td><Link href={"/player/"+guild.player}>{guild.player_display}</Link></td>
-                                <td>{xpToLevel(guild.score)}</td>
+                                <td>{scoreToLevel(guild.score)}</td>
                             </tr>
                         );
                     })}
@@ -131,7 +127,7 @@ export default function Leaderboard() {
                                 <td>{index+1}</td>
                                 <td><Link href={"/player/"+minecraft.player}>{minecraft.player_display}</Link></td>
                                 <td>{minecraft.minecraft_username}</td>
-                                <td>{xpToLevel(minecraft.score)}</td>
+                                <td>{scoreToLevel(minecraft.score)}</td>
                             </tr>
                         );
                     })}
@@ -155,7 +151,7 @@ export default function Leaderboard() {
                                 <td>{index+1}</td>
                                 <td><Link href={"/guild/"+minecraftFactions.guild}>{minecraftFactions.guild_display}</Link></td>
                                 <td>{minecraftFactions.name}</td>
-                                <td>{xpToLevel(minecraftFactions.score)}</td>
+                                <td>{scoreToLevel(minecraftFactions.score)}</td>
                             </tr>
                         );
                     })}
@@ -179,7 +175,7 @@ export default function Leaderboard() {
                                 <td>{index+1}</td>
                                 <td><Link href={"/player/"+discord.player}>{discord.player_display}</Link></td>
                                 <td>{discord.discord_username}</td>
-                                <td>{xpToLevel(discord.score)}</td>
+                                <td>{scoreToLevel(discord.score)}</td>
                             </tr>
                         );
                     })}

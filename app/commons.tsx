@@ -1,7 +1,16 @@
 "use client"
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+
+export const HomeLink = () => {
+    return (
+        <Link className="homelink" title="Return to Home" href="/">
+            <img src="/logo_nobg_squared.png" alt="logo" />
+        </Link>
+    );
+}
 
 interface Character {
     gender: boolean;
@@ -12,11 +21,15 @@ interface Character {
     facialHair: string;
 };
 
-const idToUrl = (id: string, index: string) => {
+export const idToUrl = (id: string, index: string) => {
     return process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/cosmetics/"+id+"/"+index;
 }
 
-export default function Character({id}:{id: string}) {
+export const scoreToLevel = (score:number) => {
+    return Math.floor(Math.sqrt(score/125))
+}
+
+export const Character = ({id}:{id: string}) => {
     const [hairType, setHairType] = useState<number|null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [character, setCharacter] = useState<Character|null>(null)
@@ -34,7 +47,6 @@ export default function Character({id}:{id: string}) {
                 })
                 setHairType(response.data.hair_style.type);
             })
-            .catch(error => console.log(error));
     }
     , []);
 
@@ -120,4 +132,22 @@ export default function Character({id}:{id: string}) {
     return (<div>
         <canvas ref={canvasRef} width="512" height="512"/>
     </div>);
+}
+
+export const handleAuthentication = (authenticated: boolean, setAuthenticated: (value: boolean) => void, redirect?: boolean) => {
+    if(authenticated) axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display", {withCredentials: true})
+        .then((display: any) => {
+    console.log(display);
+        })
+            .catch(() => {
+                window.location.href = "/account/create";
+            });
+    else axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user", {withCredentials: true})
+        .then(() => {
+            setAuthenticated(true);
+        })
+        .catch(() => {
+            setAuthenticated(false);
+            if(redirect) window.location.href = "/account/login";
+        });
 }

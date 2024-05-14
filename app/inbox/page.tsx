@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import HomeLink from "../homelink";
+import { HomeLink } from "@/app/commons";
+import { useGlobalContext } from "../Context/store";
 
-export default function Inbox() {
-    const [ user, setUser ] = useState<any>(null);
+export const Inbox= () => {
+    const { authenticated, setAuthenticated } = useGlobalContext();
+    const { user, setUser } = useGlobalContext();
     const [ messages, setMessages ] = useState<any[]>([]);
     const [ guild, setGuild ] = useState<any>(null);
 
@@ -89,11 +91,6 @@ export default function Inbox() {
         })
     }
 
-    // type 0: guild invitation
-    // type 1: guild application
-    // type 0: the user is lfg, the guild invites the user and the user accepts
-    // type 1: the user applies to the guild and the guild accepts
-
     return (
         <div>
             <h1>Inbox</h1>
@@ -106,13 +103,13 @@ export default function Inbox() {
                         {message.type===1&&<><p>Guild Application</p>
                         <p className="text">The player {message.player_display} has applied to join the guild {message.guild_display}.</p>
                         </>}
-                        {message.type===0&&user&&message.player===user.id&&<button onClick={() => handleJoin(message)}>Accept Invite</button>}
+                        {message.type===0&&user&&message.player===user&&<button onClick={() => handleJoin(message)}>Accept Invite</button>}
                         {message.type===1&&guild&&message.guild===guild.id&&<button onClick={() => handleWelcome(message)}>Accept Application</button>}
                         <button onClick={() => handleDelete(message)}>
                             {message.type===0&&guild&&message.guild===guild.id&&"Revoke Invite"}
                             {message.type===1&&guild&&message.guild===guild.id&&"Reject Application"}
-                            {message.type===0&&user&&message.player===user.id&&"Refuse Invite"}
-                            {message.type===1&&user&&message.player===user.id&&"Cancel Application"}
+                            {message.type===0&&user&&message.player===user&&"Refuse Invite"}
+                            {message.type===1&&user&&message.player===user&&"Cancel Application"}
                         </button>
                     </div>
                 );

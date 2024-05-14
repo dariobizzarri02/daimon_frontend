@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
+import { HomeLink } from "@/app/commons";
 
-export default function AccountLogin() {
+export const AccountLogin= () => {
     const [loginMethod, setLoginMethod] = useState<string>("");
     const [localUsername, setLocalUsername] = useState<string>("");
     const [localPassword, setLocalPassword] = useState<string>("");

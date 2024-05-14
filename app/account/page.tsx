@@ -3,10 +3,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "../homelink";
-import Character from "../character";
+import { HomeLink, Character, scoreToLevel } from "@/app/commons";
 
-export default function Account() {
+export const Account= () => {
     const [user, setUser] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
@@ -74,10 +73,6 @@ export default function Account() {
                 location.href = "/";
             });
     };
-
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
-    }
 
     return (
         <div>

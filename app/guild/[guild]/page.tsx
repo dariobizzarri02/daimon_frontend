@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
+import { HomeLink, scoreToLevel } from "@/app/commons";
 
-export default function GuildGuild({ params }: { params: { guild: string } }) {
+export const GuildGuild = ({ params }: { params: { guild: string } }) => {
     const [user, setUser] = useState<any>(null);
     const [userGuild, setUserGuild] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
@@ -31,9 +31,6 @@ export default function GuildGuild({ params }: { params: { guild: string } }) {
             withCredentials: true
         })
             .then(guild => {
-                console.log(guild.data)
-                console.log(user)
-                console.log(params.guild)
                 setUserGuild(guild.data);
             })
         axios({
@@ -50,7 +47,6 @@ export default function GuildGuild({ params }: { params: { guild: string } }) {
             withCredentials: true
         })
             .then(members => {
-                console.log(members.data)
                 setGuildMainMembers(members.data);
             })
         axios({
@@ -62,10 +58,6 @@ export default function GuildGuild({ params }: { params: { guild: string } }) {
                 setGuildMembers(members.data);
             })
     }, []);
-
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
-    }
 
     return (
         <div>

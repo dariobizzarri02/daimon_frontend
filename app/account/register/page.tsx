@@ -3,9 +3,9 @@
 import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
+import { HomeLink } from "@/app/commons";
 
-export default function AccountRegister() {
+export const AccountRegister= () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 	const [confirmPassword, setConfirmPassword] = useState<string>("");

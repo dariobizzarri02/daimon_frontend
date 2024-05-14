@@ -3,27 +3,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useGlobalContext } from "./Context/store";
+import { handleAuthentication } from "@/app/commons";
 
-export default function Home() {
-	const [user, setUser] = useState<any>(null);
-	const [guilds, setGuilds] = useState<any[]>([]);
+export default function Home () {
+	const { authenticated, setAuthenticated } = useGlobalContext();
+	const [guilds, setGuilds] = useState<number>(0);
 
 	useEffect(() => {
-		axios({
+		handleAuthentication(authenticated, setAuthenticated);
+		if(authenticated) axios({
 			method: "get",
-			url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-			withCredentials: true
-		})
-			.then(user => {
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-				setUser(user.data);
-			})
-		axios({
-			method: "get",
-			url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds",
+			url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds/count",
 			withCredentials: true
 		})
 			.then(guilds => {
@@ -34,11 +25,11 @@ export default function Home() {
 	return (
 		<main>
 			<h1>DAIMON</h1>
-			{!user&&<Link className="button" href="/account/login">Login</Link>}
-			{user&&<Link className="button" href="/account">Account</Link>}
-			{user&&<Link className="button" href="/inbox">Inbox</Link>}
-			{user&&(!guilds||!guilds.length)&&<Link className="button" href="/guild/browse">Guilds</Link>}
-			{user&&guilds&&guilds.length&&<Link className="button" href="/guild/browse/member">Your Guilds</Link>}
+			{!authenticated&&<Link className="button" href="/account/login">Login</Link>}
+			{authenticated&&<Link className="button" href="/account">Account</Link>}
+			{authenticated&&<Link className="button" href="/inbox">Inbox</Link>}
+			{authenticated&&!guilds&&<Link className="button" href="/guild/browse">Guilds</Link>}
+			{authenticated&&guilds&&<Link className="button" href="/guild/browse/member">Your Guilds</Link>}
 			<Link className="button" href="/leaderboard">Leaderboard</Link>
 		</main>
 	);

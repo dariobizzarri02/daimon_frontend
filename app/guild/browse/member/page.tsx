@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import HomeLink from "@/app/homelink";
+import { HomeLink, scoreToLevel } from "@/app/commons";
 
-export default function GuildBrowseMember() {
+export const GuildBrowseMember= () => {
     const [user, setUser] = useState<any>(null);
     const [mainGuild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
@@ -64,10 +64,6 @@ export default function GuildBrowseMember() {
         .then(() => {
             location.reload();
         })
-    }
-
-    const scoreToLevel = (score:number) => {
-        return Math.floor(Math.sqrt(score/125))
     }
 
     return (

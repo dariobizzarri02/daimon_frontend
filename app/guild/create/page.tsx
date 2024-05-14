@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import HomeLink from "../../homelink";
+import { HomeLink } from "@/app/commons";
 
-export default function GuildCreate() {
+export const GuildCreate= () => {
     const [user, setUser] = useState<any>(null);
     const [guildDisplay, setGuildDisplay] = useState<string>("");
 

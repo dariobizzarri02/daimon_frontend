@@ -1,6 +1,6 @@
-import "./globals.css"
+import "@/app/globals.css"
 import type { Metadata } from "next"
-import { GlobalContextProvider } from "./Context/store"
+import { GlobalContextProvider } from "@/app/Context/store"
 
 export const metadata: Metadata = {
   title: "Daimon",

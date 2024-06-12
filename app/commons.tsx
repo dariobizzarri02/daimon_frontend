@@ -135,13 +135,7 @@ export const Character = ({id}:{id: string}) => {
 }
 
 export const handleAuthentication = (authenticated: boolean, setAuthenticated: (value: boolean) => void, redirect?: boolean) => {
-    if(authenticated) axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display", {withCredentials: true})
-        .then((display: any) => {
-    console.log(display);
-        })
-            .catch(() => {
-                window.location.href = "/account/create";
-            });
+    if(authenticated) return;
     else axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user", {withCredentials: true})
         .then(() => {
             setAuthenticated(true);

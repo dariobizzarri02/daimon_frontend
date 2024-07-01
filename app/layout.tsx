@@ -1,4 +1,3 @@
-import "@/app/globals.css"
 import type { Metadata } from "next"
 import { GlobalContextProvider } from "@/app/Context/store"
 
@@ -14,6 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="/globals.css" />
+      </head>
       <body>
         <GlobalContextProvider>
           {children}

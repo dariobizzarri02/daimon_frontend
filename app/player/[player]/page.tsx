@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useGlobalContext } from "@/app/Context/store";
 import { HomeLink, Character, scoreToLevel, handleAuthentication } from "@/app/commons";
 
-export const Player = ({ params }: { params: { player: string } }) => {
+export default function PlayerPage ({ params }: { params: { player: string } }) {
     const { authenticated, setAuthenticated } = useGlobalContext();
     const { user } = useGlobalContext();
     const [leader, setLeader] = useState<boolean>(false);

@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { HomeLink, scoreToLevel } from "@/app/commons";
 
-export const GuildBrowse= () => {
+export default function GuildBrowse () {
     const [user, setUser] = useState<any>(null);
     const [mainGuild, setMainGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);

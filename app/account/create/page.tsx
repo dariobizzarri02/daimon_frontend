@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink } from "@/app/commons";
 
-export const AccountCreate= () => {
+export default function AccountCreate () {
     const [display, setDisplay] = useState<string>("");
 
     useEffect(() => {

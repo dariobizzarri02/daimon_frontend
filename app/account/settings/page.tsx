@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { HomeLink } from "@/app/commons";
 
-export const AccountSettings= () => {
+export default function AccountSettings () {
     const [user, setUser] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
 

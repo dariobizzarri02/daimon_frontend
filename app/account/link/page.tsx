@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink } from "@/app/commons";
 
-export const AccountLink= () => {
+export default function AccountLink () {
     const [auths, setAuths] = useState<any>(null);
     const [loginMethod, setLoginMethod] = useState<string>("");
     const [localUsername, setLocalUsername] = useState<string>("");

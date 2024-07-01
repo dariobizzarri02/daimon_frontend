@@ -5,7 +5,7 @@ import axios from "axios";
 import { HomeLink, scoreToLevel } from "@/app/commons";
 import Link from "next/link";
 
-export const GuildRecruit= () => {
+export default function GuildRecruit () {
     const [ user, setUser ] = useState<any>(null);
     const [players, setPlayers] = useState<any[]>([]);
 

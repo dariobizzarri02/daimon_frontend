@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { HomeLink } from "@/app/commons";
 
-export const GuildSettings= () => {
+export default function GuildSettings () {
     const [user, setUser] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [display, setDisplay] = useState<string>("");

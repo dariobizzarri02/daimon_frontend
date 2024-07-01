@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { HomeLink, Character, scoreToLevel } from "@/app/commons";
 
-export const Account= () => {
+export default function Account () {
     const [user, setUser] = useState<any>(null);
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);

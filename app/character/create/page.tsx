@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { HomeLink, idToUrl } from "@/app/commons";
 
-export const AccountCreate= () => {
+export default function CharacterCreate () {
     const [hairStyles, setHairStyles] = useState<any[]>([])
     const [facialHairs, setFacialHairs] = useState<any[]>([])
     const [eyeColor, setEyeColor] = useState<string>("");

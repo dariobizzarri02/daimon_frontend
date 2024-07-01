@@ -5,7 +5,7 @@ import axios from "axios";
 import { HomeLink, scoreToLevel } from "@/app/commons";
 import Link from "next/link";
 
-export const Leaderboard= () => {
+export default function Leaderboard () {
     const [leaderboard, toggleLeaderboard] = useState<string>("");
     const [pages, setPages] = useState<number>(0);
     const [page, setPage] = useState<number>(0);

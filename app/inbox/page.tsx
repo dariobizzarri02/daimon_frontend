@@ -5,7 +5,7 @@ import axios from "axios";
 import { HomeLink } from "@/app/commons";
 import { useGlobalContext } from "../Context/store";
 
-export const Inbox= () => {
+export default function Inbox () {
     const { authenticated, setAuthenticated } = useGlobalContext();
     const { user, setUser } = useGlobalContext();
     const [ messages, setMessages ] = useState<any[]>([]);

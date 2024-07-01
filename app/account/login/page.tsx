@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { HomeLink } from "@/app/commons";
 
-export const AccountLogin= () => {
+export default function AccountLogin () {
     const [loginMethod, setLoginMethod] = useState<string>("");
     const [localUsername, setLocalUsername] = useState<string>("");
     const [localPassword, setLocalPassword] = useState<string>("");

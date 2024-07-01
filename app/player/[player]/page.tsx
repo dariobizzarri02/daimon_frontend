@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useGlobalContext } from "@/app/Context/store";
-import { HomeLink, Character, scoreToLevel, handleAuthentication } from "@/app/commons";
+import { HomeLink, Character, scoreToLevel } from "@/app/commons";
 
 export default function PlayerPage ({ params }: { params: { player: string } }) {
-    const { authenticated, setAuthenticated } = useGlobalContext();
+    const { authenticated } = useGlobalContext();
     const { user } = useGlobalContext();
     const [leader, setLeader] = useState<boolean>(false);
     const [player, setPlayer] = useState<any>(null);
@@ -17,7 +17,6 @@ export default function PlayerPage ({ params }: { params: { player: string } }) 
     const [character, setCharacter] = useState<boolean|null>(null);
 
     useEffect(() => {
-        handleAuthentication(authenticated, setAuthenticated);
         if(authenticated) axios({
             method: "get",
             url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/leader",

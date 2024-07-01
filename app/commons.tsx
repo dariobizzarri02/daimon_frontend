@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useGlobalContext } from "./Context/store";
 
 export const HomeLink = () => {
     return (
@@ -23,6 +24,10 @@ interface Character {
 
 export const idToUrl = (id: string, index: string) => {
     return process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/cosmetics/"+id+"/"+index;
+}
+
+export const levelToScore = (level:number) => {
+    return Math.pow(level, 2)*125;
 }
 
 export const scoreToLevel = (score:number) => {
@@ -134,14 +139,40 @@ export const Character = ({id}:{id: string}) => {
     </div>);
 }
 
-export const handleAuthentication = (authenticated: boolean, setAuthenticated: (value: boolean) => void, redirect?: boolean) => {
-    if(authenticated) return;
-    else axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user", {withCredentials: true})
-        .then(() => {
-            setAuthenticated(true);
-        })
-        .catch(() => {
-            setAuthenticated(false);
-            if(redirect) window.location.href = "/account/login";
-        });
+export const AuthHandler = ({children}:{children: React.ReactNode}) => {
+    const { authenticated, setAuthenticated } = useGlobalContext();
+    const { setUser } = useGlobalContext();
+    const { displayCreated, setDisplayCreated } = useGlobalContext();
+
+    useEffect(() => {
+        if(authenticated === null) {
+            axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user", {withCredentials: true})
+                .then((res: any) => {
+                    setUser(res.data);
+                    setAuthenticated(true);
+                })
+                .catch(() => {
+                    setUser("");
+                    setAuthenticated(false);
+                });
+        }
+        else if(authenticated) {
+            if(displayCreated === null) {
+                axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display", {withCredentials: true})
+                    .then((res: any) => {
+                        if(!res.data) {
+                            setDisplayCreated(false);
+                            location.href = "/account/create";
+                            return;
+                        }
+                        setDisplayCreated(true);
+                    });
+            }
+            else if(!displayCreated) {
+                location.href = "/account/create";
+            }
+        }
+    }, [authenticated, displayCreated]);
+
+    return <>{children}</>;
 }

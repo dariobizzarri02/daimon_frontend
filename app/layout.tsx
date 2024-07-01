@@ -1,5 +1,7 @@
+import "@/public/globals.css"
 import type { Metadata } from "next"
 import { GlobalContextProvider } from "@/app/Context/store"
+import { AuthHandler } from "./commons"
 
 export const metadata: Metadata = {
   title: "Daimon",
@@ -11,14 +13,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
-      <head>
-        <link rel="stylesheet" href="/globals.css" />
-      </head>
       <body>
         <GlobalContextProvider>
-          {children}
+          <AuthHandler>
+            {children}
+          </AuthHandler>
         </GlobalContextProvider>
       </body>
     </html>

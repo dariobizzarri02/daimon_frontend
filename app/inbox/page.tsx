@@ -6,51 +6,41 @@ import { HomeLink } from "@/app/commons";
 import { useGlobalContext } from "../Context/store";
 
 export default function Inbox () {
-    const { authenticated, setAuthenticated } = useGlobalContext();
-    const { user, setUser } = useGlobalContext();
+    const { authenticated } = useGlobalContext();
+    const { user } = useGlobalContext();
     const [ messages, setMessages ] = useState<any[]>([]);
     const [ guild, setGuild ] = useState<any>(null);
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
-            });
-        Promise.all([
-            axios({
+        if(authenticated===false) {
+            location.href = "/account/login";
+            return;
+        }
+        else if(authenticated) {
+            Promise.all([
+                axios({
+                    method: "get",
+                    url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/messages",
+                    withCredentials: true
+                }),
+                axios({
+                    method: "get",
+                    url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/messages",
+                    withCredentials: true
+                })
+            ])
+                .then(([messages, guildMessages]) => {
+                    setMessages(messages.data.concat(guildMessages.data));
+                })
+            axios ({
                 method: "get",
-                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/messages",
-                withCredentials: true
-            }),
-            axios({
-                method: "get",
-                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild/messages",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
                 withCredentials: true
             })
-        ])
-            .then(([messages, guildMessages]) => {
-                setMessages(messages.data.concat(guildMessages.data));
-            })
-        axios ({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
-            withCredentials: true
-        })
-            .then(guild => {
-                setGuild(guild.data);
-            })
+                .then(guild => {
+                    setGuild(guild.data);
+                })
+        }
     }, []);
 
     const handleDelete = (message: any) => {

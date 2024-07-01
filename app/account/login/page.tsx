@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useGlobalContext } from "@/app/Context/store";
 import { HomeLink } from "@/app/commons";
 
 export default function AccountLogin () {
+    const { authenticated } = useGlobalContext();
     const [loginMethod, setLoginMethod] = useState<string>("");
     const [localUsername, setLocalUsername] = useState<string>("");
     const [localPassword, setLocalPassword] = useState<string>("");
@@ -13,17 +15,9 @@ export default function AccountLogin () {
     const [minecraftPassword, setMinecraftPassword] = useState<string>("");
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(user.data) {
-                    location.href = "/account";
-                    return;
-                }
-            });
+        if(authenticated) {
+            location.href = "/account";
+        }
         const url = new URL(window.location.href);
         const method = url.searchParams.get("method");
         if(method&&["local","minecraft","discord"].includes(method)) {

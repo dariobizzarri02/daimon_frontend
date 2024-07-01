@@ -3,26 +3,25 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink } from "@/app/commons";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function AccountCreate () {
-    const [display, setDisplay] = useState<string>("");
+    const [display, setDisplay] = useState("");
+    const { displayCreated } = useGlobalContext();
 
     useEffect(() => {
+        if (displayCreated) {
+            location.href = "/account";
+            return;
+        }
         axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display",
             withCredentials: true
         })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data.display) {
-                    location.href = "/account";
-                    return;
-                }
-            })
+            .then((display) => {
+                setDisplay(display.data);
+            });
     }, []);
 
     const handleSubmit = () => {

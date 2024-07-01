@@ -3,64 +3,89 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useGlobalContext } from "../Context/store";
 import { HomeLink, Character, scoreToLevel } from "@/app/commons";
 
 export default function Account () {
-    const [user, setUser] = useState<any>(null);
+	const { authenticated } = useGlobalContext();
+    const [user, setUser] = useState<string>("");
+    const [score, setScore] = useState<number>(0);
+    const [display, setDisplay] = useState<string>("");
     const [auths, setAuths] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
     const [character, setCharacter] = useState<boolean|null>(null);
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
+    }, []);
+
+    useEffect(() => {
+        if(authenticated===false) {
+            location.href = "/account/login";
+            return;
+        }
+        else if(authenticated) {
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
+                withCredentials: true
             })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth",
-            withCredentials: true
-        })
-            .then(auths => {
-                setAuths(auths.data);
+                .then(user => {
+                    setUser(user.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/score",
+                withCredentials: true
             })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
-            withCredentials: true
-        })
-            .then(guild => {
-                setGuild(guild.data);
+                .then(score => {
+                    setScore(score.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display",
+                withCredentials: true
             })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds",
-            withCredentials: true
-        })
-            .then(response => {
-                setGuilds(response.data);
+                .then(display => {
+                    if(!display.data) {
+                        location.href = "/account/create";
+                        return;
+                    }
+                    setDisplay(display.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth",
+                withCredentials: true
             })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/character/boolean",
-            withCredentials: true
-        })
-            .then(response => {
-                setCharacter(response.data);
+                .then(auths => {
+                    setAuths(auths.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+                withCredentials: true
             })
+                .then(guild => {
+                    setGuild(guild.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds",
+                withCredentials: true
+            })
+                .then(guilds => {
+                    setGuilds(guilds.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/character/boolean",
+                withCredentials: true
+            })
+                .then(character => {
+                    setCharacter(character.data);
+                })
+        }
     }, []);
 
     const handleLogout = () => {
@@ -77,11 +102,11 @@ export default function Account () {
     return (
         <div>
             <h1>Account</h1>
-            {user&&user.id&&character===true&&<Character id={user.id}/>}
-            {user&&user.display&&<div className="card">
-                <Link href={"/player/"+user.id}><p>Display Name: {user.display}</p></Link>
-                <p className="text">Total Level: {scoreToLevel(user.score)}</p>
-                <p className="text">Total Score: {user.score}</p>
+            {user&&character===true&&<Character id={user}/>}
+            {display&&<div className="card">
+                <Link href={"/player/"+user}><p>Display Name: {display}</p></Link>
+                <p className="text">Total Level: {scoreToLevel(score)}</p>
+                <p className="text">Total Score: {score}</p>
             </div>}
             {guild&&<div className="card">
                 <Link href={"/guild/"+guild.id}><p>Main Guild: {guild.display}</p></Link>

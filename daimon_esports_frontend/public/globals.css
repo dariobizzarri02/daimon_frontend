@@ -1,0 +1,460 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/Roboto/Roboto-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/Roboto/Roboto-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/Roboto/Roboto-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/Roboto/Roboto-BoldItalic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+}
+
+:root {
+    --primary: #233162;
+    --secondary: #318AC3;
+    --tertiary: #77C1E7;
+    --quaternary: #E0EDE0;
+    --quinary: #DEE2A6;
+    --error: #FF0000;
+    --font: "Roboto";
+}
+
+body {
+    font-family: var(--font);
+    background-color: var(--primary);
+    color: var(--quaternary);
+    margin: 0vh;
+    padding: 0vh;
+}
+
+h1 {
+    font-size: 10vh;
+    text-align: center;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 5vh;
+    text-align: center;
+}
+
+h3 {
+    font-size: 2vh;
+    text-align: center;
+}
+
+a {
+    color: var(--tertiary);
+    text-decoration: none;
+}
+
+.error {
+    color: var(--error);
+    font-weight: bold;
+}
+
+.button {
+    background-color: var(--quinary);
+    color: var(--primary);
+    font-size: 5vh;
+    text-align: center;
+    font-weight: bold;
+    padding: 2vh;
+    margin: auto;
+    margin-top: 4vh;
+    cursor: pointer;
+    width: 90%;
+    display: block;
+}
+
+.card {
+    background-color: var(--secondary);
+    border: 1vh solid var(--quaternary);
+    border-radius: 2vh;
+    padding: 2vh;
+    width: 150vh;
+    margin: auto;
+    margin-top: 4vh;
+    position: relative;
+}
+
+.card h1 {
+    color: var(--primary);
+}
+
+.card img {
+    height: 8vh;
+    margin-right: 1vh;
+    margin-left: 3vh;
+}
+
+.card p {
+    color: var(--primary);
+    font-size: 4vh;
+    font-weight: bold;
+    vertical-align: middle;
+    margin-left: 3vh;
+}
+
+.card p.text {
+    font-size: 3vh;
+    font-weight: normal;
+}
+
+.card input {
+    font-size: 3vh;
+    font-weight: normal;
+    margin-left: 3vh;
+    width: 100vh;
+    padding: 2vh;
+}
+
+.card button {
+    background-color: var(--quinary);
+    color: var(--primary);
+    font-size: 4vh;
+    text-align: center;
+    font-weight: bold;
+    padding: 2vh;
+    margin-left: 3vh;
+    margin-top: 4vh;
+    margin-bottom: 2vh;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.formtab {
+    display: flex;
+    flex-direction: row;
+    width: 150vh;
+    margin: auto;
+    border: 1vh solid var(--quaternary);
+    margin-bottom: 4vh;
+}
+
+.form {
+    background-color: var(--primary);
+    font-weight: bold;
+    padding: 2vh;
+    flex-grow: 1;
+    border-left: 1vh solid var(--quaternary);
+}
+
+.centertext {
+    text-align: center;
+}
+
+.homelink {
+    width: 15vh;
+    height: 15vh;
+    position: fixed;
+    left: 0vh;
+    top: 0vh;
+}
+
+.homelink img {
+    width: 10vh;
+    margin: 2vh;
+    transition: 0.1s;
+}
+
+.homelink:hover img {
+    transform: scale(1.1);
+}
+
+.input {
+    display: inline-block;
+    height: 1vh;
+    border-radius: 2.5vh;
+    padding: 2vh;
+    width: 40vh;
+    font-size: 3vh;
+    font-family: var(--font);
+}
+
+.inputbutton {
+    display: inline-block;
+    margin-left: 2vh;
+    border-radius: 2.5vh;
+    padding: 1vh;
+    font-size: 3vh;
+    font-family: var(--font);
+    cursor: pointer;
+    background-color: var(--quinary);
+    color: var(--primary);
+}
+
+.header {
+    background-color: var(--secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header p {
+    order: 2;
+    flex-grow: 1;
+    position: absolute;
+    font-size: 5vh;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    padding: 0vh;
+    margin: 0vh;
+    top: 1vh;
+}
+
+.inputbox {
+    z-index: 1;
+    order: 3;
+    display: flex;
+    margin: 2vh;
+}
+
+.accountbutton {
+    order: 1;
+    z-index: 1;
+    margin: 2vh;
+    border-radius: 2.5vh;
+    padding: 2vh 5vh;
+    font-size: 3vh;
+    font-weight: bold;
+    text-align: center;
+    font-family: var(--font);
+    cursor: pointer;
+    background-color: var(--quinary);
+    color: var(--primary);
+}
+
+.searchbar {
+    display: block;
+    margin: 2vh;
+    margin-bottom: 20vh;
+}
+
+.searchbar button {
+    display: inline-block;
+    padding: 1vh;
+    font-size: 3vh;
+    font-family: var(--font);
+    cursor: pointer;
+    background-color: var(--quinary);
+    color: var(--primary);
+}
+
+.searchbar select {
+    display: inline-block;
+    padding: 1vh;
+    font-size: 3vh;
+    font-family: var(--font);
+    cursor: pointer;
+    background-color: var(--quinary);
+    color: var(--primary);
+}
+
+.searchbar input {
+    display: inline-block;
+    padding: 1vh;
+    font-size: 3vh;
+    font-family: var(--font);
+    color: var(--primary);
+}
+
+iframe {
+    width: 100vh;
+    height: 56.25vh;
+    position: relative;
+    margin: auto;
+    display: block;
+    border: none;
+    margin-top: 4vh;
+    margin-bottom: 20vh;
+}
+
+.games {
+    background-color: var(--tertiary);
+    display: flex;
+    min-height: min-content;
+    overflow-x: auto;
+}
+
+.game {
+    width: 50vh;
+    padding: 2vh;
+    transition: 0.1s;
+    flex: 1;
+}
+
+.passed {
+    background-color: var(--secondary);
+}
+
+.ongoing {
+    background-color: var(--error);
+}
+
+.game:hover {
+    background-color: var(--quaternary);
+}
+
+.game p {
+    font-size: 3vh;
+    font-weight: bold;
+    text-align: center;
+    color: var(--primary);
+}
+
+.gamelink {
+    transition: 0.1s;
+}
+
+.gamelink:hover {
+    color: var(--tertiary);
+}
+
+.verticalscroll {
+    overflow-y: auto;
+    height: 50vh;
+}
+
+.cardobject {
+    background-color: var(--primary);
+    padding: 1vh;
+    margin: 1vh 0vh;
+}
+
+.cardobject p {
+    font-size: 2vh;
+    font-weight: bold;
+    color: var(--quaternary);
+}
+
+.buttonrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+#notification
+{
+    font-size: 4vh;
+    margin: 1vh;
+    padding: 4vh;
+    filter: drop-shadow(1vh 1vh 1vh var(--primary));
+    border-radius: 1vh;
+    border: 1vh solid var(--quaternary);
+    visibility: hidden;
+    color: var(--primary);
+    background-color: var(--quaternary);
+    position: fixed;
+    z-index: 3;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1vh;
+}
+
+#notification.show
+{
+    visibility: visible;
+}
+
+#popup
+{
+    visibility: hidden;
+    position: fixed;
+    z-index: 2;
+    left: 0vh;
+    top: 0vh;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#popup.show
+{
+    visibility: visible;
+}
+
+#popupcontent
+{
+    font-size: 4vh;
+    margin: 1vh;
+    padding: 4vh;
+    filter: drop-shadow(1vh 1vh 1vh var(--primary));
+    border-radius: 1vh;
+    border: 1vh solid var(--quaternary);
+    color: var(--primary);
+    background-color: var(--quaternary);
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 1vh;
+}
+
+#popupcontent button {
+    background-color: var(--quinary);
+    color: var(--primary);
+    font-size: 5vh;
+    text-align: center;
+    font-weight: bold;
+    padding: 2vh;
+    margin: 4vh;
+    margin-top: 4vh;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.versus {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.versus .team {
+    max-width: 50vh;
+    height: auto;
+    flex: 1;
+    font-size: 20vh;
+}
+
+.versus .vs {
+    flex: 0;
+    font-size: 15vh;
+}
+
+.versus .score {
+    max-width: 50vh;
+    height: auto;
+    flex: 1;
+    font-size: 20vh;
+    text-align: center;
+}
+
+.logo {
+    height: 20vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2vw;
+}

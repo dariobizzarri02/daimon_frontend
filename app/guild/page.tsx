@@ -23,24 +23,24 @@ export default function Guild () {
                 .then(guild => {
                     setGuild(guild.data);
                     setLfp(guild.data.lfp);
+                    axios({
+                        method: "get",
+                        url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+guild.data+"/mainmembers",
+                        withCredentials: true
+                    })
+                        .then(members => {
+                            setGuildMainMembers(members.data);
+                        })
+                    axios({
+                        method: "get",
+                        url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+guild.data+"/members",
+                        withCredentials: true
+                    })
+                        .then(members => {
+                            setGuildMembers(members.data);
+                        })
                 })
         }
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+guild.data.id+"/mainmembers",
-            withCredentials: true
-        })
-            .then(members => {
-                setGuildMainMembers(members.data);
-            })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+guild.data.id+"/members",
-            withCredentials: true
-        })
-            .then(members => {
-                setGuildMembers(members.data);
-            })
     }, [authenticated]);
 
     const handleLfpToggle = () => {

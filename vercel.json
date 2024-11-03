@@ -1,7 +1,4 @@
 {
-    "projects": {
-      "rootDirectory": "./"
-    },
     "ignore": [
       "./daimon_esports_frontend/*"
     ]

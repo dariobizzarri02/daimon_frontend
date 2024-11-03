@@ -4,28 +4,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink, scoreToLevel } from "@/app/commons";
 import Link from "next/link";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function GuildRecruit () {
-    const [ user, setUser ] = useState<any>(null);
+    const { authenticated, user } = useGlobalContext();
     const [players, setPlayers] = useState<any[]>([]);
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
-            });
+        if(authenticated===false) {
+            location.href = "/account/login";
+            return;
+        }
         axios({
             method: "get",
             url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/players",
@@ -52,7 +41,7 @@ export default function GuildRecruit () {
         <div>
             <h1>Recruit</h1>
             <h2>Players</h2>
-            {players.filter(player => player.lfg).filter(player => player.id !== user.id).sort((a, b) => b.score - a.score).map(player => {
+            {players.filter(player => player.lfg).filter(player => player.id !== user).sort((a, b) => b.score - a.score).map(player => {
                     return (
                         <div key={player.id} className="card">
                             <p>{player.display}</p>

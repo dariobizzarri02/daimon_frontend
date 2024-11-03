@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink } from "@/app/commons";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function AccountLink () {
+    const { authenticated } = useGlobalContext();
     const [auths, setAuths] = useState<any>(null);
     const [loginMethod, setLoginMethod] = useState<string>("");
     const [localUsername, setLocalUsername] = useState<string>("");
@@ -14,22 +16,11 @@ export default function AccountLink () {
     const [minecraftPassword, setMinecraftPassword] = useState<string>("");
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-            })
-        axios({
+        if(authenticated===false) {
+            location.href = "/account/login";
+            return;
+        }
+        if(authenticated) axios({
             method: "get",
             url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth",
             withCredentials: true
@@ -37,6 +28,9 @@ export default function AccountLink () {
             .then(auths => {
                 setAuths(auths.data);
             })
+    }, [authenticated]);
+
+    useEffect(() => {
         const url = new URL(window.location.href);
         const method = url.searchParams.get("method");
         if(method&&["local","minecraft","discord"].includes(method)) {

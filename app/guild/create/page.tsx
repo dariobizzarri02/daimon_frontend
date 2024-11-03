@@ -3,29 +3,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink } from "@/app/commons";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function GuildCreate () {
-    const [user, setUser] = useState<any>(null);
+    const { authenticated, user } = useGlobalContext();
     const [guildDisplay, setGuildDisplay] = useState<string>("");
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
-            });
-    }, []);
+        if(authenticated===false) {
+            location.href = "/account/login";
+            return;
+        }
+    }, [authenticated]);
     
     const handlePost = () => {
         if(!guildDisplay) return;
@@ -34,7 +23,7 @@ export default function GuildCreate () {
             url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild",
             data: {
                 display: guildDisplay,
-                player: user.id
+                player: user
             },
             withCredentials: true
         })

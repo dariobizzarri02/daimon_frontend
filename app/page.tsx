@@ -18,7 +18,7 @@ export default function Home () {
 			.then(guilds => {
 				setGuilds(guilds.data);
 			})
-	}, []);
+	}, [authenticated]);
 
 	return (
 		<main>

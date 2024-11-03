@@ -16,7 +16,7 @@ export default function Inbox () {
             location.href = "/account/login";
             return;
         }
-        else if(authenticated) {
+        if(authenticated) {
             Promise.all([
                 axios({
                     method: "get",
@@ -41,7 +41,7 @@ export default function Inbox () {
                     setGuild(guild.data);
                 })
         }
-    }, []);
+    }, [authenticated]);
 
     const handleDelete = (message: any) => {
         axios({

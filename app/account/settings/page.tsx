@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { HomeLink } from "@/app/commons";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function AccountSettings () {
-    const [user, setUser] = useState<any>(null);
+    const { authenticated, user } = useGlobalContext();
+    const [userDisplay, setUserDisplay] = useState<string>("");
     const [auths, setAuths] = useState<any>(null);
 
     const [password, setPassword] = useState<string>("");
@@ -22,33 +24,31 @@ export default function AccountSettings () {
     const [passwordChange, togglePasswordChange] = useState<boolean>(false);
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(!user.data) {
-                    location.href = "/account/login";
-                    return;
-                }
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
-                setDisplay(user.data.display);
+        if(authenticated===false) {
+            location.href = "/account/login";
+            return;
+        }
+        if(authenticated) {
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display",
+                withCredentials: true
             })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth",
-            withCredentials: true
-        })
-            .then(auths => {
-                setAuths(auths.data);
-                setUsername(auths.data.local.username);
+                .then(display => {
+                    setUserDisplay(display.data);
+                    setDisplay(display.data);
+                })
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/auth",
+                withCredentials: true
             })
-    }, [displayChange, usernameChange, passwordChange]);
+                .then(auths => {
+                    setAuths(auths.data);
+                    setUsername(auths.data.local.username);
+                })
+        }
+    }, [displayChange, usernameChange, passwordChange, authenticated]);
 
     const handleLogout = () => {
         axios({
@@ -128,7 +128,7 @@ export default function AccountSettings () {
             {user&&<div className="card">
                 <p>Display Name</p>
                 {!displayChange&&<>
-                    <p className="text">{user.display}</p>
+                    <p className="text">{userDisplay}</p>
                     <button onClick={() => toggleDisplayChange(true)}>Edit</button>
                 </>}
                 {displayChange&&<>

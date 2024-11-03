@@ -4,35 +4,26 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { HomeLink, scoreToLevel } from "@/app/commons";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function GuildPage ({ params }: { params: { guild: string } }) {
-    const [user, setUser] = useState<any>(null);
+    const { authenticated, user } = useGlobalContext();
     const [userGuild, setUserGuild] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);
     const [guildMainMembers, setGuildMainMembers] = useState<any[]>([]);
     const [guildMembers, setGuildMembers] = useState<any[]>([]);
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
-            withCredentials: true
-        })
-            .then(user => {
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
+        if(authenticated) {
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+                withCredentials: true
             })
-        axios({
-            method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
-            withCredentials: true
-        })
-            .then(guild => {
-                setUserGuild(guild.data);
-            })
+                .then(guild => {
+                    setUserGuild(guild.data);
+                })
+        }
         axios({
             method: "get",
             url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+params.guild,
@@ -57,7 +48,7 @@ export default function GuildPage ({ params }: { params: { guild: string } }) {
             .then(members => {
                 setGuildMembers(members.data);
             })
-    }, []);
+    }, [authenticated]);
 
     return (
         <div>
@@ -79,7 +70,7 @@ export default function GuildPage ({ params }: { params: { guild: string } }) {
                     <Link href={"/player/"+member.id} key={member.id}><p className="text">{member.display}</p></Link>
                 ))}
             </div>
-            {userGuild&&userGuild.id===params.guild&&user&&userGuild.player===user.id&&<Link className="button" href="/guild/manage">Manage</Link>}
+            {userGuild&&userGuild.id===params.guild&&user&&userGuild.player===user&&<Link className="button" href="/guild/manage">Manage</Link>}
             <HomeLink/>
         </div>
     );

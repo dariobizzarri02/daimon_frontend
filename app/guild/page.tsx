@@ -4,53 +4,44 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { HomeLink, scoreToLevel } from "@/app/commons";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function Guild () {
-    const [user, setUser] = useState<any>(null);
+    const { authenticated, user } = useGlobalContext();
     const [guild, setGuild] = useState<any>(null);
     const [guildMainMembers, setGuildMainMembers] = useState<any[]>([]);
     const [guildMembers, setGuildMembers] = useState<any[]>([]);
     const [lfp, setLfp] = useState<boolean>(false);
 
     useEffect(() => {
+        if(authenticated) {
+            axios({
+                method: "get",
+                url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+                withCredentials: true
+            })
+                .then(guild => {
+                    setGuild(guild.data);
+                    setLfp(guild.data.lfp);
+                })
+        }
         axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+guild.data.id+"/mainmembers",
             withCredentials: true
         })
-            .then(user => {
-                if(user.data&&!user.data.display) {
-                    location.href = "/account/create";
-                    return;
-                }
-                setUser(user.data);
-                axios({
-                    method: "get",
-                    url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+user.data.guild+"/mainmembers",
-                    withCredentials: true
-                })
-                    .then(members => {
-                        setGuildMainMembers(members.data);
-                    })
-                axios({
-                    method: "get",
-                    url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+user.data.guild+"/members",
-                    withCredentials: true
-                })
-                    .then(members => {
-                        setGuildMembers(members.data);
-                    })
+            .then(members => {
+                setGuildMainMembers(members.data);
             })
         axios({
             method: "get",
-            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guild",
+            url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/guild/"+guild.data.id+"/members",
             withCredentials: true
         })
-            .then(guild => {
-                setGuild(guild.data);
-                setLfp(guild.data.lfp);
+            .then(members => {
+                setGuildMembers(members.data);
             })
-    }, []);
+    }, [authenticated]);
 
     const handleLfpToggle = () => {
         axios({

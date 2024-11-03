@@ -26,7 +26,7 @@ export default function AccountLogin () {
         else {
             setLoginMethod("local");
         }
-    }, []);
+    }, [authenticated]);
     
     const handleLocalLogin = () => {
         axios({

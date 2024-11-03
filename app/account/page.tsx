@@ -17,9 +17,6 @@ export default function Account () {
     const [character, setCharacter] = useState<boolean|null>(null);
 
     useEffect(() => {
-    }, []);
-
-    useEffect(() => {
         if(authenticated===false) {
             location.href = "/account/login";
             return;
@@ -86,7 +83,7 @@ export default function Account () {
                     setCharacter(character.data);
                 })
         }
-    }, []);
+    }, [authenticated]);
 
     const handleLogout = () => {
         axios({

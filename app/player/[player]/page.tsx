@@ -58,7 +58,7 @@ export default function PlayerPage ({ params }: { params: { player: string } }) 
             .then(character => {
                 setCharacter(character.data);
             })
-    }, []);
+    }, [authenticated]);
 
     const HandlePost = (player: string) => {
         axios({
@@ -92,7 +92,7 @@ export default function PlayerPage ({ params }: { params: { player: string } }) 
     return (
         <div>
             <h1>{player&&player.display}</h1>
-            {character===true&&<Character id={player.id}/>}
+            {character===true&&player&&<Character id={player.id}/>}
             <div className="card">
                 <p>Player</p>
                 <p className="text">Level: {player&&scoreToLevel(player.score)}</p>

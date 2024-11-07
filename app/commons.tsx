@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import axios from "axios";
 import { useGlobalContext } from "./Context/store";
 
@@ -10,6 +11,24 @@ export const HomeLink = () => {
         <Link className="homelink" title="Return to Home" href="/">
             <img src="/logo_nobg_squared.png" alt="logo" />
         </Link>
+    );
+}
+
+const convertLinks = (text: string) => {
+    return text.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
+        const parts = p1.split("|");
+        return `[${parts[1]}](/universe/${parts[0].replace(/\s/g, "%20")})`;
+    });
+}
+
+export const MarkdownPage = ({ page }:{ page: string }) => {
+    page = convertLinks(page);
+    return (
+        <div>
+            <ReactMarkdown>
+                {page}
+            </ReactMarkdown>
+        </div>
     );
 }
 

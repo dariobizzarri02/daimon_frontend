@@ -11,6 +11,11 @@ export default function GuildPage (props: { params: Params }) {
     const [page, setPage] = useState<string>("");
     const [name, setName] = useState<string>("");
 
+    function setSpaces (str: string) {
+        //replace %20 with spaces
+        return str.replace(/%20/g, " ");
+    }
+
     useEffect(() => {
         const fullPath = params.article.join("/");
         const repoName = "daimon_canon";
@@ -25,13 +30,13 @@ export default function GuildPage (props: { params: Params }) {
             .then(page => {
                 console.log(page.data);
                 setPage(page.data);
-                setName(params.article[params.article.length-1]);
+                setName(setSpaces(params.article[params.article.length-1]));
             })
     }, []);
     
     return (
         <div>
-            <h1>Universe</h1>
+            <h1>{name}</h1>
             <MarkdownPage page={page}/>
             <HomeLink/>
         </div>

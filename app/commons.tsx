@@ -24,7 +24,7 @@ const convertLinks = (text: string) => {
 export const MarkdownPage = ({ page }:{ page: string }) => {
     page = convertLinks(page);
     return (
-        <div>
+        <div className="markdown">
             <ReactMarkdown>
                 {page}
             </ReactMarkdown>

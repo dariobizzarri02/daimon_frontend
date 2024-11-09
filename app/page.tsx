@@ -13,7 +13,8 @@ export default function Home () {
 		if(authenticated) axios({
 			method: "get",
 			url: process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/guilds/count",
-			withCredentials: true
+			withCredentials: true,
+			headers: { 'Cache-Control': 'no-store' },
 		})
 			.then(guilds => {
 				setGuilds(guilds.data);
@@ -29,7 +30,7 @@ export default function Home () {
 			{authenticated&&!guilds&&<Link className="button" href="/guild/browse">Guilds</Link>}
 			{authenticated&&guilds!=0&&<Link className="button" href="/guild/browse/member">Your Guilds</Link>}
 			<Link className="button" href="/leaderboard">Leaderboard</Link>
-			<Link className="button" href="/universe/Map/Alpha%20Sphere/Alpha%20Sphere">Universe</Link>
+			<Link className="button" href="/universe/Universe">Universe</Link>
 		</main>
 	);
 }

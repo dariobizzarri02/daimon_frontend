@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink, MarkdownPage } from "@/app/commons";
-import Link from "next/link";
 
 export default function Universe ({ params }: { params: { article: string[] } }) {
     const [page, setPage] = useState<string>("");
+    const [name, setName] = useState<string>("");
 
     useEffect(() => {
         const fullPath = params.article.join("/");
         const repoName = "daimon_canon";
         const repoOwner = "masterbaseguild";
-        const branchName = "main";
+        const branchName = "live";
         const filePath = `${fullPath}.md`;
 
         axios({
@@ -22,6 +22,7 @@ export default function Universe ({ params }: { params: { article: string[] } })
             .then(page => {
                 console.log(page.data);
                 setPage(page.data);
+                setName(params.article[params.article.length-1]);
             })
     }, []);
     

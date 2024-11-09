@@ -6,7 +6,13 @@ import Link from "next/link";
 import { HomeLink, scoreToLevel } from "@/app/commons";
 import { useGlobalContext } from "@/app/Context/store";
 
-export default function GuildPage ({ params }: { params: { guild: string } }) {
+interface GuildPageProps {
+    params: {
+        guild: string;
+    };
+}
+
+export default function GuildPage ({ params }: GuildPageProps) {
     const { authenticated, user } = useGlobalContext();
     const [userGuild, setUserGuild] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);

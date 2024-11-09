@@ -1,18 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { HomeLink, scoreToLevel } from "@/app/commons";
 import { useGlobalContext } from "@/app/Context/store";
 
-interface GuildPageProps {
-    params: {
-        guild: string;
-    };
-}
+type Params = Promise<{ guild: string }>;
 
-export default function GuildPage ({ params }: GuildPageProps) {
+export default function GuildPage (props: { params: Params }) {
+    const params = use(props.params);
     const { authenticated, user } = useGlobalContext();
     const [userGuild, setUserGuild] = useState<any>(null);
     const [guild, setGuild] = useState<any>(null);

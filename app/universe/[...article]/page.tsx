@@ -1,10 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import axios from "axios";
 import { HomeLink, MarkdownPage } from "@/app/commons";
 
-export default function Universe ({ params }: { params: { article: string[] } }) {
+type Params = Promise<{ article: string[] }>;
+
+export default function GuildPage (props: { params: Params }) {
+    const params = use(props.params);
     const [page, setPage] = useState<string>("");
     const [name, setName] = useState<string>("");
 

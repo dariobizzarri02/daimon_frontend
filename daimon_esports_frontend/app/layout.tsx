@@ -1,7 +1,7 @@
 import "@/public/globals.css"
 import type { Metadata } from "next";
 import { GlobalContextProvider } from "@/app/Context/store"
-import { AuthHandler, Notification, Popup } from "./commons"
+import { AuthHandler, Notification, Popup } from "@/app/commons"
 
 export const metadata: Metadata = {
   title: "Daimon Esports",

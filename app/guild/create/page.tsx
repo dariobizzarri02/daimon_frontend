@@ -8,6 +8,8 @@ import { useGlobalContext } from "@/app/Context/store";
 export default function GuildCreate () {
     const { authenticated, user } = useGlobalContext();
     const [guildDisplay, setGuildDisplay] = useState<string>("");
+    
+    document.title = `Create Guild - Daimon`;
 
     useEffect(() => {
         if(authenticated===false) {

@@ -6,7 +6,7 @@ import { HomeLink, MarkdownPage } from "@/app/commons";
 
 type Params = Promise<{ article: string[] }>;
 
-export default function GuildPage (props: { params: Params }) {
+export default function Universe (props: { params: Params }) {
     const params = use(props.params);
     const [page, setPage] = useState<string>("");
     const [name, setName] = useState<string>("");
@@ -18,9 +18,9 @@ export default function GuildPage (props: { params: Params }) {
 
     useEffect(() => {
         const fullPath = params.article.join("/");
-        const repoName = "daimon_canon";
+        const repoName = "daimon_canon_masterbase";
         const repoOwner = "masterbaseguild";
-        const branchName = "live";
+        const branchName = "main";
         const filePath = `${fullPath}.md`;
 
         axios({
@@ -30,7 +30,9 @@ export default function GuildPage (props: { params: Params }) {
             .then(page => {
                 console.log(page.data);
                 setPage(page.data);
-                setName(setSpaces(params.article[params.article.length-1]));
+                const title = setSpaces(params.article[params.article.length-1])
+                setName(title);
+                document.title = `${title} - Daimon Universe`
             })
     }, []);
     

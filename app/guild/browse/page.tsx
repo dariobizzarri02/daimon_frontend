@@ -13,6 +13,8 @@ export default function GuildBrowse () {
     const [lfg, setLfg] = useState<boolean>(false);
     const [allGuilds, setAllGuilds] = useState<any[]>([]);
     const [messages, setMessages] = useState<any[]>([]);
+    
+    document.title = `Guilds - Daimon`;
 
     useEffect(() => {
         if(authenticated) {

@@ -9,6 +9,8 @@ import { useGlobalContext } from "@/app/Context/store";
 export default function GuildRecruit () {
     const { authenticated, user } = useGlobalContext();
     const [players, setPlayers] = useState<any[]>([]);
+    
+    document.title = `Guild Recruit - Daimon`;
 
     useEffect(() => {
         if(authenticated===false) {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useGlobalContext } from "./Context/store";
+import { useGlobalContext } from "@/app/Context/store";
 
 export const HomeLink = () => {
     return (

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useGlobalContext } from "./Context/store";
-import { GameFetcher } from "./commons";
+import { useGlobalContext } from "@/app/Context/store";
+import { GameFetcher } from "@/app/commons";
 
 export default function Home () {
 	const { setNotification, authenticated, setPopup } = useGlobalContext();

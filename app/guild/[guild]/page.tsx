@@ -25,6 +25,7 @@ export default function GuildPage (props: { params: Params }) {
             })
                 .then(guild => {
                     setUserGuild(guild.data);
+                    document.title = `${guild.data.display} (Guild) - Daimon`;
                 })
         }
         axios({

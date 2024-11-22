@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import axios from "axios";
-import { useGlobalContext } from "./Context/store";
+import { useGlobalContext } from "@/app/Context/store";
 
 export const HomeLink = () => {
     return (

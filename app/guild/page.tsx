@@ -22,6 +22,7 @@ export default function Guild () {
             })
                 .then(guild => {
                     setGuild(guild.data);
+                    document.title = `${guild.data.display} (Guild) - Daimon`;
                     setLfp(guild.data.lfp);
                     axios({
                         method: "get",

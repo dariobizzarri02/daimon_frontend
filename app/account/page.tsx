@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useGlobalContext } from "../Context/store";
+import { useGlobalContext } from "@/app/Context/store";
 import { HomeLink, Character, scoreToLevel } from "@/app/commons";
 
 export default function Account () {
@@ -15,6 +15,8 @@ export default function Account () {
     const [guild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
     const [character, setCharacter] = useState<boolean|null>(null);
+
+    document.title = `Account - Daimon`;
 
     useEffect(() => {
         if(authenticated===false) {

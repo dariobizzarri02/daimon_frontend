@@ -9,6 +9,8 @@ export default function AccountRegister () {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 	const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+    document.title = `Register - Daimon`;
     
     const handleLocalRegister = () => {
 		if(password!==confirmPassword||password.length<0||username.length<0||confirmPassword.length<0) {

@@ -10,6 +10,8 @@ export default function GuildBrowseMember () {
 	const { authenticated, user } = useGlobalContext();
     const [mainGuild, setGuild] = useState<any>(null);
     const [guilds, setGuilds] = useState<any[]>([]);
+    
+    document.title = `Your Guilds - Daimon`;
 
     useEffect(() => {
         if(authenticated===false) {

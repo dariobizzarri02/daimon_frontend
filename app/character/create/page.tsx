@@ -16,6 +16,8 @@ export default function CharacterCreate () {
     const [firstCharacter, setFirstCharacter] = useState<boolean>(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
+    document.title = `Create Character - Daimon`
+
     useEffect(() => {
         axios({
             method: "get",

@@ -3,13 +3,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { HomeLink } from "@/app/commons";
-import { useGlobalContext } from "../Context/store";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function Inbox () {
     const { authenticated } = useGlobalContext();
     const { user } = useGlobalContext();
     const [ messages, setMessages ] = useState<any[]>([]);
     const [ guild, setGuild ] = useState<any>(null);
+
+    document.title = `Inbox - Daimon`
 
     useEffect(() => {
         if(authenticated===false) {

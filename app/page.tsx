@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useGlobalContext } from "./Context/store";
+import { useGlobalContext } from "@/app/Context/store";
 
 export default function Home () {
 	const { authenticated } = useGlobalContext();

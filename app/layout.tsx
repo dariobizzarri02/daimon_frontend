@@ -1,7 +1,7 @@
 import "@/public/globals.css"
 import type { Metadata } from "next"
 import { GlobalContextProvider } from "@/app/Context/store"
-import { AuthHandler } from "./commons"
+import { AuthHandler } from "@/app/commons"
 
 export const metadata: Metadata = {
   title: "Daimon",

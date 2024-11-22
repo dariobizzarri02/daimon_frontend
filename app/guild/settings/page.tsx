@@ -14,6 +14,8 @@ export default function GuildSettings () {
     const [guildMainMembers, setGuildMainMembers] = useState<any[]>([]);
     const [guildMembers, setGuildMembers] = useState<any[]>([]);
     const [lfp, setLfp] = useState<boolean>(false);
+    
+    document.title = `Guild Settings - Daimon`;
 
     useEffect(() => {
         if(authenticated===false) {

@@ -42,7 +42,7 @@ interface Character {
 };
 
 export const idToUrl = (id: string, index: string) => {
-    return process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/cosmetics/"+id+"/"+index;
+    return process.env.NEXT_PUBLIC_MINIO_URL+"cosmetics/"+id+"/"+index+".png";
 }
 
 export const levelToScore = (level:number) => {

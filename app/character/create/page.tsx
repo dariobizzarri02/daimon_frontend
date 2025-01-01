@@ -56,7 +56,7 @@ export default function CharacterCreate () {
     }, []);
 
     useEffect(() => {
-        if(!hairStyle||!eyeColor||!hairColor||!skinColor) return;
+        if(gender==null||hairStyle==null||eyeColor==null||hairColor==null||skinColor==null||facialHair==null) return;
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d");
         const style: any = hairStyles.find(style => style.id === hairStyle);
@@ -143,7 +143,7 @@ export default function CharacterCreate () {
                 eyeColor: eyeColor,
                 hairColor: hairColor,
                 skinColor: skinColor,
-                hairStyle: hairStyle,
+                hairStyle: hairStyle?hairStyle:null,
                 facialHair: facialHair?facialHair:null,
                 gender: gender
             },
@@ -164,31 +164,31 @@ export default function CharacterCreate () {
             <h1>Create Character</h1>
             <canvas ref={canvasRef} width="512" height="512"/>
             <div className="gui">
-                {gender&&<>
+                {gender!==null&&<>
                 <div className="guicard">
                     <label>Gender</label>
                     <input type="checkbox" checked={gender} onChange={e => setGender(!gender)}/>
                 </div>
                 </>}
-                {eyeColor&&<>
+                {eyeColor!==null&&<>
                 <div className="guicard">
                 <label>Eye Color</label>
                 <input type="color" value={eyeColor} onChange={e => setEyeColor(e.target.value)}/>
                 </div>
                 </>}
-                {hairColor&&<>
+                {hairColor!==null&&<>
                 <div className="guicard">
                 <label>Hair Color</label>
                 <input type="color" value={hairColor} onChange={e => setHairColor(e.target.value)}/>
                 </div>
                 </>}
-                {skinColor&&<>
+                {skinColor!==null&&<>
                 <div className="guicard">
                 <label>Skin Color</label>
                 <input type="color" value={skinColor} onChange={e => setSkinColor(e.target.value)}/>
                 </div>
                 </>}
-                {hairStyle&&<>
+                {hairStyle!==null&&<>
                 <div className="guicard">
                 <label>Hair Style</label>
                 <select value={hairStyle} onChange={e => setHairStyle(e.target.value)}>
@@ -197,7 +197,7 @@ export default function CharacterCreate () {
                 </select>
                 </div>
                 </>}
-                {facialHair&&<>
+                {facialHair!==null&&<>
                 <div className="guicard"><label>Facial Hair</label>
                 <select value={facialHair} onChange={e => setFacialHair(e.target.value)}>
                     <option value="">None</option>

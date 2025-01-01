@@ -36,7 +36,6 @@ export default function GuildPage (props: { params: Params }) {
             .then(player => {
                 setPlayer(player.data);
                 setAuths({local: {username: player.data.username}, discord: player.data.discord, minecraft: player.data.minecraft});
-                document.title = `${player.data.display} (Player) - Daimon`
             })
         axios({
             method: "get",

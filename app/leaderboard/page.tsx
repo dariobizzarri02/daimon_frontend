@@ -11,8 +11,6 @@ export default function Leaderboard () {
     const [page, setPage] = useState<number>(0);
     const [entries, setEntries] = useState<any[]>([]);
 
-    document.title = `Leaderboard - Daimon`;
-
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const leaderboard = urlParams.get("leaderboard");

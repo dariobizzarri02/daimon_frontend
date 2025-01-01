@@ -23,8 +23,6 @@ export default function AccountSettings () {
     const [usernameChange, toggleUsernameChange] = useState<boolean>(false);
     const [passwordChange, togglePasswordChange] = useState<boolean>(false);
 
-    document.title = `Account Settings - Daimon`;
-
     useEffect(() => {
         if(authenticated===false) {
             location.href = "/account/login";

@@ -1,13 +1,8 @@
 "use client"
 
 import { HomeLink } from "@/app/commons";
-import { useEffect } from "react";
 
 export default function NotFound () {
-
-    useEffect(() => {
-        document.title = `Not Found - Daimon`;
-    }, []);
 
     return (
         <div>

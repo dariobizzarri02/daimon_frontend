@@ -15,8 +15,6 @@ export default function AccountLink () {
     const [minecraftUsername, setMinecraftUsername] = useState<string>("");
     const [minecraftPassword, setMinecraftPassword] = useState<string>("");
 
-    document.title = `Link Account - Daimon`;
-
     useEffect(() => {
         if(authenticated===false) {
             location.href = "/account/login";

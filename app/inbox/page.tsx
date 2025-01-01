@@ -11,8 +11,6 @@ export default function Inbox () {
     const [ messages, setMessages ] = useState<any[]>([]);
     const [ guild, setGuild ] = useState<any>(null);
 
-    document.title = `Inbox - Daimon`
-
     useEffect(() => {
         if(authenticated===false) {
             location.href = "/account/login";

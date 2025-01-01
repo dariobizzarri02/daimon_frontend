@@ -9,8 +9,6 @@ export default function AccountCreate () {
     const [display, setDisplay] = useState("");
     const { displayCreated } = useGlobalContext();
 
-    document.title = `Create Account - Daimon`;
-
     useEffect(() => {
         if (displayCreated) {
             location.href = "/account";

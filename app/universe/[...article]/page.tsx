@@ -32,7 +32,6 @@ export default function Universe (props: { params: Params }) {
                 setPage(page.data);
                 const title = setSpaces(params.article[params.article.length-1])
                 setName(title);
-                document.title = `${title} - Daimon Universe`
             })
     }, []);
     

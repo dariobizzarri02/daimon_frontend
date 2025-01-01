@@ -16,8 +16,6 @@ export default function Account () {
     const [guilds, setGuilds] = useState<any[]>([]);
     const [character, setCharacter] = useState<boolean|null>(null);
 
-    document.title = `Account - Daimon`;
-
     useEffect(() => {
         if(authenticated===false) {
             location.href = "/account/login";

@@ -187,7 +187,7 @@ export const AuthHandler = ({children}:{children: React.ReactNode}) => {
                         setDisplayCreated(true);
                     });
             }
-            else if(!displayCreated) {
+            else if(!displayCreated&&location.pathname !== "/account/create") {
                 location.href = "/account/create";
             }
         }

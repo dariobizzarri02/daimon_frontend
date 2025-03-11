@@ -103,7 +103,7 @@ export default function AccountLogin () {
                     <button className="form" onClick={handleMinecraftLogin}>Login</button>
                 </div>
                 <h3>In order to register your Minecraft Account and gain points through it,</h3>
-                <h3>join the mc.masterbaseguild.it server and perform the /register command.</h3>
+                <h3>join the mc.masterbase.team server and perform the /register command.</h3>
             </>
             }
             {loginMethod==="discord"&&<>

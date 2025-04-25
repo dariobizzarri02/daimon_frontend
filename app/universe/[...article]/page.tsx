@@ -20,7 +20,7 @@ export default function Universe (props: { params: Params }) {
         const fullPath = params.article.join("/");
         const repoName = "daimon_canon_masterbase";
         const repoOwner = "masterbaseguild";
-        const branchName = "live";
+        const branchName = "main";
         const filePath = `${fullPath}.md`;
 
         axios({

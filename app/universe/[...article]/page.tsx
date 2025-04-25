@@ -18,7 +18,7 @@ export default function Universe (props: { params: Params }) {
 
     useEffect(() => {
         const fullPath = params.article.join("/");
-        const repoName = "daimon_canon";
+        const repoName = "daimon_canon_masterbase";
         const repoOwner = "masterbaseguild";
         const branchName = "live";
         const filePath = `${fullPath}.md`;

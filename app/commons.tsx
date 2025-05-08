@@ -179,7 +179,7 @@ export const AuthHandler = ({children}:{children: React.ReactNode}) => {
             if(displayCreated === null) {
                 axios.get(process.env.NEXT_PUBLIC_BACKEND_ENDPOINT+"/user/display", {withCredentials: true})
                     .then((res: any) => {
-                        if(!res.data) {
+                        if(!res.data&&location.pathname !== "/account/create") {
                             setDisplayCreated(false);
                             location.href = "/account/create";
                             return;

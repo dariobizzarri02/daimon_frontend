@@ -18,7 +18,7 @@ export default function Universe (props: { params: Params }) {
 
     useEffect(() => {
         const fullPath = params.article.join("/");
-        const repoName = "daimon_canon_masterbase";
+        /* const repoName = "daimon_canon_masterbase";
         const repoOwner = "masterbaseguild";
         const branchName = "main";
         const filePath = `${fullPath}.md`;
@@ -26,6 +26,10 @@ export default function Universe (props: { params: Params }) {
         axios({
             method: "get",
             url: `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${branchName}/${filePath}`,
+        }) */
+        axios({
+            method: "get",
+            url: `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/canon/${fullPath}`,
         })
             .then(page => {
                 console.log(page.data);

@@ -6,6 +6,9 @@ import { AuthHandler } from "@/app/commons"
 export const metadata: Metadata = {
   title: "Daimon",
   description: "Powered by MasterBase",
+  icons: {
+    icon: "/favicon.svg",
+  }
 }
 
 export default function RootLayout({

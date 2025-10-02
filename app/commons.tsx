@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
+import dynamic from "next/dynamic";
+const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
 import axios from "axios";
 import { useGlobalContext } from "@/app/Context/store";
 
 export const HomeLink = () => {
     return (
         <Link className="homelink" title="Return to Home" href="/">
-            <img src="/logo_nobg_squared.png" alt="logo" />
+            <img src="/logo_vector.svg" alt="logo" />
         </Link>
     );
 }

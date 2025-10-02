@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Daimon",
   description: "Powered by MasterBase",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/favicon.png",
   }
 }
 
